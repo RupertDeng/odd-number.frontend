@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Odd Number",
+  "name": "Odd Number - crowdsourced platform to search or clarify numbers for unknown phone call",
   "icons": [
     {
       "src": "favicon.ico",
