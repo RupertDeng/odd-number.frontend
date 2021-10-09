@@ -1,2 +1,47 @@
+.navbar-nav a:hover {
+  margin-bottom: -1px;
+  border-bottom: 1px solid white;
+  color: white !important;
+}
 
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  box-shadow: none;
+  border: 0;
+}
+
+.toggler-icon {
+  width: 30px;
+  height: 2px;
+  background-color: white;
+  display: block;
+  transition: all 0.2s;
+}
+
+.bottom-bar {
+  margin-top: 10px;
+}
+
+.navbar-toggler .top-bar {
+  transform: translateY(6px) rotate(45deg);
+}
+.navbar-toggler .bottom-bar {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.navbar-toggler.collapsed .top-bar {
+  transform: rotate(0)
+}
+.navbar-toggler.collapsed .bottom-bar {
+  transform: rotate(0)
+}
+.navbar-toggler.collapsed .toggler-icon {
+  opacity: 0.6;
+}
 
