@@ -1,8 +1,0 @@
-.app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  background-image: linear-gradient(to left bottom, #6c4bc6, #006fd7, #0082c3, #008c9d, #009179);
-}
