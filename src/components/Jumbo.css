@@ -1,0 +1,9 @@
+#jumbo {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#jumbo-headline {
+  color: white;
+  opacity: 0.7;
+}
