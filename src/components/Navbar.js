@@ -8,7 +8,7 @@ export const Navbar = () => {
           <picture>
             <source media='(max-width: 720px)' srcSet='/images/logo-small.png'></source>
             <source media='(min-width: 721px)' srcSet='/images/logo-large.png'></source>
-            <img src='/images/logo-large.png' alt='Odd Number the App' height='28'></img>
+            <img src='/images/logo-large.png' alt='Odd Number the App' height='26'></img>
           </picture>
         </a>
         <button className='navbar-toggler collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapsibleNavbar' aria-controls='collapsibleNavbar' aria-expanded='false' aria-label='Toggle navigation'>
