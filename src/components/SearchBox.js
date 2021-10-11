@@ -1,13 +1,19 @@
+import './SearchBox.css'
+
 export const SearchBox = () => {
 
   return (
-    <div className='container-fluid pt-5'>
-      <div className='row w-75 bg-light m-auto'>
-        <div className='col-auto'>
-          <input type='text' className='form-control' placeholder='U.S. phone numbers'></input>
-        </div>
-        <div className='col-auto'>
-          <button type='submit' class='btn btn-primary'>Search</button>
+    <div className='mx-auto my-5' id='search-panel'>
+      <div className='container-fluid px-2 py-5'>
+        <div className='row justify-content-center align-items-center g-2'>
+          <div className='col-8'>
+            <input type='text' className='form-control fs-4' placeholder='U.S. phone numbers'></input>
+          </div>
+          <div className='col-auto'>
+            <button type='submit' className='btn fs-5 text-white' style={{backgroundColor: '#0070DC'}}>
+              <i className='bi bi-search'></i> <span className='d-none d-sm-inline'>Search</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
