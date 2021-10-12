@@ -14,7 +14,7 @@ export const SearchBox = () => {
     <div className='mx-auto mb-5 px-2 py-5 shadow' id='search-panel'>
       <div className='container-fluid'>
         <div className='row justify-content-center align-items-center g-2'>
-          <div className='col-8'>
+          <div className='col-9 col-sm-8'>
             <input type='text' className='form-control fs-4' placeholder='U.S. phone numbers'></input>
           </div>
           <div className='col-auto'>
