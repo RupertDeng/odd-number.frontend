@@ -1,0 +1,10 @@
+.info-group {
+  width: 100%;
+  max-width: 800px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .info-group {
+    padding-left: 80px;
+  }
+}

@@ -1,5 +1,6 @@
 import {Jumbo} from '../components/Jumbo';
-import { SearchBox } from '../components/SearchBox';
+import {SearchBox} from '../components/SearchBox';
+import {Info} from '../components/Info';
 import './Home.css'
 
 export const Home = () => {
@@ -14,6 +15,7 @@ export const Home = () => {
       <Jumbo />
       <div className='placeholder'>
         <SearchBox />
+        <Info />
       </div>
     </>
   );
