@@ -7,3 +7,7 @@
   color: white;
   opacity: 0.7;
 }
+
+#jumbo.hide {
+  display: none;
+}

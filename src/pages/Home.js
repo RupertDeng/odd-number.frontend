@@ -13,7 +13,7 @@ export const Home = () => {
   return (
     <>
       <Jumbo />
-      <div className='placeholder'>
+      <div id='placeholder'>
         <SearchBox />
         <Info />
       </div>

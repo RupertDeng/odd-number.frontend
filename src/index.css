@@ -6,4 +6,5 @@ body {
   min-height: 100vh;
   background-image: linear-gradient(to left bottom, #544adc, #0071e7, #0083ca, #008d9e, #009179);
   background-repeat: no-repeat;
+  overflow-y: overlay;
 }
