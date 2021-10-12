@@ -3,10 +3,14 @@
   max-width: 560px;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.4);
-  transition: padding 0.3s;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  transition: padding 0.3s, margin, 0.3s;
 }
 
 #search-panel.narrow-panel {
   padding-top: 20px !important;
   padding-bottom: 20px !important;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

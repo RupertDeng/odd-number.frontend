@@ -1,12 +1,3 @@
 #home {
   min-height: calc(100vh - 145px);
 }
-
-#placeholder {
-  margin-top: 70px;
-  transition: margin 0.3s;
-}
-
-#placeholder.nojumbo {
-  margin-top: 20px;
-}

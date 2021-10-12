@@ -5,14 +5,13 @@ export const SearchBox = () => {
 
   const handleSearchClick = () => {
     document.getElementById('jumbo').classList.add('hide');
-    document.getElementById('placeholder').classList.add('nojumbo');
     document.getElementById('search-panel').classList.add('narrow-panel');
     window.scrollTo({top: 0, behavior: 'smooth'})
   };
 
 
   return (
-    <div className='mx-auto mb-5 px-2 py-5 shadow' id='search-panel'>
+    <div className='mx-auto px-2 py-5 shadow' id='search-panel'>
       <div className='container-fluid'>
         <div className='row justify-content-center align-items-center g-2'>
           <div className='col-9 col-sm-8'>

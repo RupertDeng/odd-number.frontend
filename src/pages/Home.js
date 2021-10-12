@@ -13,10 +13,8 @@ export const Home = () => {
   return (
     <div id='home'>
       <Jumbo />
-      <div id='placeholder'>
-        <SearchBox />
-        <Info />
-      </div>
+      <SearchBox />
+      <Info />
     </div>
   );
 }
