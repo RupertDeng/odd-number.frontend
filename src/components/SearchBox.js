@@ -7,6 +7,7 @@ export const SearchBox = () => {
     document.getElementById('jumbo').classList.add('hide');
     document.getElementById('placeholder').classList.add('nojumbo');
     document.getElementById('search-panel').classList.add('narrow-panel');
+    window.scrollTo({top: 0, behavior: 'smooth'})
   };
 
 
