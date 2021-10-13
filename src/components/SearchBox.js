@@ -25,9 +25,9 @@ export const SearchBox = () => {
 
   // function to handle visual effect after clicking searching button
   const handleSearchClick = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'})
     document.getElementById('jumbo').classList.add('hide');
     document.getElementById('search-panel').classList.add('narrow-panel');
-    window.scrollTo({top: 0, behavior: 'smooth'})
   };
 
   // function to handle search submit (button click or hit ENTER in text box)
