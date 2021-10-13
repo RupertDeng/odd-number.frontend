@@ -5,6 +5,8 @@ import {Privacy} from './pages/Privacy';
 import {Navbar} from './components/Navbar';
 import {Footer} from './components/Footer';
 import smoothscroll from 'smoothscroll-polyfill';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 
 function App() {
