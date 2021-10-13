@@ -59,7 +59,6 @@ export const SearchBox = () => {
           </form>
         </div>
       </div>
-      <Popup popupId='invalidNumberPopup' popupIcon='bi bi-emoji-dizzy' popupText='Invalid Number! Please input valid U.S. phone number to search.' />
     </>
   );
 
