@@ -5,8 +5,8 @@ import './SearchBox.css'
 
 export const SearchBox = () => {
 
+  // the number searched and validation function to sanitize it
   const [number, setNumber] = useState('');
-
   const validateNumber = (num) => {
     let filtered = num.replace(/\D/g, '')
     if (filtered.length > 11 || filtered.length < 10 || (filtered.length === 11 && filtered[0] !== '1')) {
@@ -19,24 +19,28 @@ export const SearchBox = () => {
     }
   };
 
+  // function to handle user input on search box
   const handleSearchInput = (e) => {
     setNumber(e.target.value);
   };
 
+  // function to handle visual effect after clicking searching button
   const handleSearchClick = () => {
     document.getElementById('jumbo').classList.add('hide');
     document.getElementById('search-panel').classList.add('narrow-panel');
     window.scrollTo({top: 0, behavior: 'smooth'})
   };
 
+  // function to handle search submit (button click or hit ENTER in text box)
   const handleSearchSubmit = (e) => {
-    const validated = validateNumber(number);
     e.preventDefault();
+    const validated = validateNumber(number);
     if (validated === '') {
       let alertPopup = new Modal(document.getElementById('invalidNumberPopup'), {keyboard: false});
       alertPopup.show();
     } else {
-      console.log(validated);
+
+      // axios http request to backend
     }
   };
 
