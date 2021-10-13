@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {Popup} from './Popup';
 import './SearchBox.css';
 
 export const SearchBox = () => {
