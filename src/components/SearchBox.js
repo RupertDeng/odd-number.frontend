@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {Popup} from './Popup';
-import {Modal} from 'bootstrap';
-import './SearchBox.css'
+import './SearchBox.css';
 
 export const SearchBox = () => {
 
@@ -36,8 +35,7 @@ export const SearchBox = () => {
     e.preventDefault();
     const validated = validateNumber(number);
     if (validated === '') {
-      let alertPopup = new Modal(document.getElementById('invalidNumberPopup'), {keyboard: false});
-      alertPopup.show();
+
     } else {
 
       // axios http request to backend
