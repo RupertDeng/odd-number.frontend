@@ -34,9 +34,8 @@ export const SearchBox = () => {
     e.preventDefault();
     const validated = validateNumber(number);
     if (validated === '') {
-
+      window.alert('Invalid Number! Please input valid U.S. phone number to search.')
     } else {
-
       // axios http request to backend
     }
   };
