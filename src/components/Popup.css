@@ -2,7 +2,7 @@
   width: 95%;
   max-width: 320px;
   height: 90px;
-  bottom: -100px;
+  bottom: -100%;
   left: 50%;
   transform: translateX(-50%);
   transition: all 0.2s ease;
