@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {Popup} from './Popup';
 import './SearchBox.css';
 
 export const SearchBox = () => {
@@ -28,14 +29,16 @@ export const SearchBox = () => {
     document.getElementById('jumbo').classList.add('hide');
     document.getElementById('search-panel').classList.add('narrow-panel');
   };
-
+  
   // function to handle search submit (button click or hit ENTER in text box)
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const validated = validateNumber(number);
+    const alertPop = document.getElementById('invalidNumber');
     if (validated === '') {
-      window.alert('Invalid Number! Please input valid U.S. phone number to search.')
+      alertPop.classList.add('active');
     } else {
+      alertPop.classList.remove('active');
       // axios http request to backend
     }
   };
@@ -57,6 +60,7 @@ export const SearchBox = () => {
           </form>
         </div>
       </div>
+      <Popup popupId='invalidNumber' popupIcon='bi bi-emoji-dizzy' popupTitle='Invalid Number' popupMessage='Please input valid U.S phone number for search.' />
     </>
   );
 
