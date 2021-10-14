@@ -15,7 +15,7 @@ export const Popup = ({popupId, popupIcon, popupTitle, popupMessage}) => {
             <p className='fs-6 m-0'>{popupMessage}</p>
           </div>
           <div className='col-2 text-center'>
-            <button type='button' className='btn-close fs-3 bg-light rounded-pill' onClick={handlePopupClose}></button>
+            <button type='button' className='btn-close fs-3 bg-warning rounded-pill' onClick={handlePopupClose}></button>
           </div>
         </div>
       </div>
