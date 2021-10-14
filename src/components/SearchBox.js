@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Popup} from './Popup';
 import './SearchBox.css';
 
-export const SearchBox = () => {
+export const SearchBox = ({updateSearchResult}) => {
 
   // the number searched and validation function to sanitize it
   const [number, setNumber] = useState('');
@@ -60,7 +60,7 @@ export const SearchBox = () => {
           </form>
         </div>
       </div>
-      <Popup popupId='invalidNumber' popupIcon='bi bi-emoji-dizzy' popupTitle='Invalid Number' popupMessage='Please enter valid U.S phone numbers to search.' />
+      <Popup popupId='invalidNumber' popupIcon='bi bi-emoji-dizzy' popupTitle='Invalid Number' popupMessage='Please enter valid U.S phone number to search.' />
     </>
   );
 
