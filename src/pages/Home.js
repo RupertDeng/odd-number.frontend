@@ -6,19 +6,19 @@ import './Home.css'
 
 export const Home = () => {
 
-  const [searchResult, setSearchResult] = useState({});
+  // const [searchResult, setSearchResult] = useState({});
 
 
-  const updateSearchResult = (result) => {
-    setSearchResult(result);
-  };
+  // const updateSearchResult = (result) => {
+  //   setSearchResult(result);
+  // };
   
 
 
   return (
     <div id='home'>
       <Jumbo />
-      <SearchBox updateSearchResult={updateSearchResult}/>
+      <SearchBox />
       <Info />
     </div>
   );

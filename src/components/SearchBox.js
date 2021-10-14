@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Popup} from './Popup';
 import './SearchBox.css';
 
-export const SearchBox = ({updateSearchResult}) => {
+export const SearchBox = () => {
 
   // the number searched and validation function to sanitize it
   const [number, setNumber] = useState('');
