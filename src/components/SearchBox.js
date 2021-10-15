@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Popup} from './Popup';
 import './SearchBox.css';
 
-export const SearchBox = ({updateSearchResult}) => {
+export const SearchBox = () => {
 
   // the number searched and validation function to sanitize it
   const [number, setNumber] = useState('');
@@ -40,6 +40,7 @@ export const SearchBox = ({updateSearchResult}) => {
     } else {
       alertPop.classList.remove('active');
       // axios http request to backend
+      console.log(process.env.REACT_APP_API_URL);
     }
   };
 
