@@ -1,8 +1,9 @@
 import {useState} from 'react';
+import axios from 'axios';
 import {Popup} from './Popup';
 import './SearchBox.css';
 
-export const SearchBox = () => {
+export const SearchBox = ({updateSearchResult}) => {
 
   // the number searched and validation function to sanitize it
   const [number, setNumber] = useState('');
@@ -31,6 +32,15 @@ export const SearchBox = () => {
   };
   
   // function to handle search submit (button click or hit ENTER in text box)
+  const searchNumber = async (num) => {
+    const result = await axios({
+      method: 'get',
+      url: `${process.env.REACT_APP_API_URL}/search/${num}`,
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
+    });
+    updateSearchResult(result.data);
+  }
+  
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const validatedNum = validateNumber(number);
@@ -39,8 +49,7 @@ export const SearchBox = () => {
       alertPop.classList.add('active');
     } else {
       alertPop.classList.remove('active');
-      // axios http request to backend
-      console.log(validatedNum);
+      searchNumber(validatedNum);
     }
   };
 
