@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import axios from 'axios';
-import {Popup} from './Popup';
 import './SearchBox.css';
 
 export const SearchBox = ({updateSearchResult}) => {
@@ -33,12 +32,19 @@ export const SearchBox = ({updateSearchResult}) => {
   
   // function to handle search submit (button click or hit ENTER in text box)
   const searchNumber = async (num) => {
-    const result = await axios({
-      method: 'get',
-      url: `${process.env.REACT_APP_API_URL}search/${num}`,
-      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
-    });
-    updateSearchResult(result.data);
+    try {
+      const result = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_API_URL}search/${num}`,
+        headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
+      });
+      updateSearchResult(result.data);
+    } catch(err) {
+      console.log(err);
+      const errorPop = document.getElementById('serviceError');
+      errorPop.classList.add('active');
+      setTimeout(()=>errorPop.classList.remove('active'), 2000);
+    }
   }
   
   const handleSearchSubmit = (e) => {
@@ -55,23 +61,20 @@ export const SearchBox = ({updateSearchResult}) => {
 
 
   return (
-    <>
-      <div className='mx-auto px-2 py-5 shadow' id='search-panel'>
-        <div className='container-fluid'>
-          <form className='row justify-content-center align-items-center g-2' onSubmit={handleSearchSubmit}>
-            <div className='col-9 col-sm-8'>
-              <input type='text' className='form-control fs-4' placeholder='U.S. phone numbers' onChange={handleSearchInput}></input>
-            </div>
-            <div className='col-auto'>
-              <button type='submit' className='btn btn-primary fs-5 text-white' onClick={handleSearchClick}>
-                <i className='bi bi-search'></i> <span className='d-none d-sm-inline'>Search</span>
-              </button>
-            </div>
-          </form>
-        </div>
+    <div className='mx-auto px-2 py-5 shadow' id='search-panel'>
+      <div className='container-fluid'>
+        <form className='row justify-content-center align-items-center g-2' onSubmit={handleSearchSubmit}>
+          <div className='col-9 col-sm-8'>
+            <input type='text' className='form-control fs-4' placeholder='U.S. phone numbers' onChange={handleSearchInput}></input>
+          </div>
+          <div className='col-auto'>
+            <button type='submit' className='btn btn-primary fs-5 text-white' onClick={handleSearchClick}>
+              <i className='bi bi-search'></i> <span className='d-none d-sm-inline'>Search</span>
+            </button>
+          </div>
+        </form>
       </div>
-      <Popup popupId='invalidNumber' popupIcon='bi bi-emoji-dizzy' popupTitle='Invalid Number' popupMessage='Please enter valid U.S phone number to search.' />
-    </>
+    </div>
   );
 
 };
