@@ -40,7 +40,7 @@ export const SearchBox = () => {
     } else {
       alertPop.classList.remove('active');
       // axios http request to backend
-      console.log(process.env.REACT_APP_API_URL);
+      console.log(number);
     }
   };
 
