@@ -8,6 +8,7 @@ import './Home.css'
 export const Home = () => {
 
   const [searchResult, setSearchResult] = useState({});
+  console.log(searchResult);
   
   return (
     <>
