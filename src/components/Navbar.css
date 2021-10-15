@@ -36,10 +36,10 @@
 }
 
 .navbar-toggler.collapsed .top-bar {
-  transform: rotate(0)
+  transform: rotate(0);
 }
 .navbar-toggler.collapsed .bottom-bar {
-  transform: rotate(0)
+  transform: rotate(0);
 }
 .navbar-toggler.collapsed .toggler-icon {
   opacity: 0.6;
