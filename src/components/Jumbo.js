@@ -9,6 +9,5 @@ export const Jumbo = () => {
         <p className='h3 text-white'>You can try search here or share info to help others alike ..</p>
       </div>
     </div>
-    
   );
 }
