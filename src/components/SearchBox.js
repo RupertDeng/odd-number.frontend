@@ -33,14 +33,14 @@ export const SearchBox = () => {
   // function to handle search submit (button click or hit ENTER in text box)
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    const validated = validateNumber(number);
+    const validatedNum = validateNumber(number);
     const alertPop = document.getElementById('invalidNumber');
-    if (validated === '') {
+    if (validatedNum === '') {
       alertPop.classList.add('active');
     } else {
       alertPop.classList.remove('active');
       // axios http request to backend
-      console.log(number);
+      console.log(validatedNum);
     }
   };
 
