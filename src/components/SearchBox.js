@@ -35,7 +35,7 @@ export const SearchBox = ({updateSearchResult}) => {
   const searchNumber = async (num) => {
     const result = await axios({
       method: 'get',
-      url: `${process.env.REACT_APP_API_URL}/search/${num}`,
+      url: `${process.env.REACT_APP_API_URL}search/${num}`,
       headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
     });
     updateSearchResult(result.data);
