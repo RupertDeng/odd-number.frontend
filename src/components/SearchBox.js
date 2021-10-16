@@ -53,6 +53,7 @@ export const SearchBox = ({updateSearchResult}) => {
     const alertPop = document.getElementById('invalidNumber');
     if (validatedNum === '') {
       alertPop.classList.add('active');
+      updateSearchResult(undefined);
     } else {
       alertPop.classList.remove('active');
       searchNumber(validatedNum);
