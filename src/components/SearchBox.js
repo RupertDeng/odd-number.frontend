@@ -1,11 +1,17 @@
 import {useRef} from 'react';
-import axios from 'axios';
 import './SearchBox.css';
 
-export const SearchBox = ({updateSearchResult, handleServiceError}) => {
+export const SearchBox = ({queryNumber, setSearchResult, handleServiceError}) => {
 
   const searchBoxRef = useRef();
   
+  // function to handle visual effect after clicking searching button
+  const handleSearchClick = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+    document.getElementById('jumbo').classList.add('hide');
+    document.getElementById('search-panel').classList.add('narrow-panel');
+  };
+
   // validation function to sanitize search number
   const validateNumber = (num) => {
     let filtered = num.replace(/\D/g, '')
@@ -18,38 +24,23 @@ export const SearchBox = ({updateSearchResult, handleServiceError}) => {
       return `(${filtered.slice(0, 3)})${filtered.slice(3, 6)}-${filtered.slice(6, 10)}`;
     }
   };
-
-  // function to handle visual effect after clicking searching button
-  const handleSearchClick = () => {
-    window.scrollTo({top: 0, behavior: 'smooth'})
-    document.getElementById('jumbo').classList.add('hide');
-    document.getElementById('search-panel').classList.add('narrow-panel');
-  };
   
   // function to handle search submit (button click or hit ENTER in text box)
-  const searchNumber = async (num) => {
+  const handleSearchSubmit = async (e) => {
     try {
-      const result = await axios({
-        method: 'get',
-        url: `${process.env.REACT_APP_API_URL}search/${num}`,
-        headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
-      });
-      updateSearchResult(result.data);
+      e.preventDefault();
+      const validatedNum = validateNumber(searchBoxRef.current.value);
+      const alertPop = document.getElementById('invalidNumber');
+      if (validatedNum === '') {
+        alertPop.classList.add('active');
+        setSearchResult(undefined);
+      } else {
+        alertPop.classList.remove('active');
+        const response = await queryNumber(validatedNum);
+        setSearchResult(response.data);
+      }
     } catch(err) {
       handleServiceError(err);
-    }
-  }
-  
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const validatedNum = validateNumber(searchBoxRef.current.value);
-    const alertPop = document.getElementById('invalidNumber');
-    if (validatedNum === '') {
-      alertPop.classList.add('active');
-      updateSearchResult(undefined);
-    } else {
-      alertPop.classList.remove('active');
-      searchNumber(validatedNum);
     }
   };
 

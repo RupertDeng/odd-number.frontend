@@ -1,13 +1,18 @@
-import axios from 'axios';
+import {useEffect} from 'react';
 
-export const MessagePoster = ({searchNumber, handleServiceError}) => {
+export const MessagePoster = ({searchResult, postMessage, handleServiceError}) => {
 
+  // when searched number changes with poster panel open, clear entered info to avoid confusion
+  useEffect(()=>clearPoster(), [searchResult.number]);
+
+  // function to clear poster panel inputs
   const clearPoster = () => {
     document.querySelectorAll('input.form-check-input').forEach(e => e.checked = false);
     document.getElementById('poster-form').value = '';
   }
 
-  const handlePosterButton = () => {
+  // handle visual effect when opening and closing poster panel by clicking the post/cancel button
+  const handlePosterButtonClick = () => {
     const posterButton = document.getElementById('poster-button');
     const posterTitle = document.getElementById('poster-title');
     if (posterButton.classList.contains('collapsed')) {
@@ -24,35 +29,30 @@ export const MessagePoster = ({searchNumber, handleServiceError}) => {
     }
   }
 
-  const postMessage = async () => {
+  // function to handle message submit
+  const handleMessageSubmit = async (e) => {
     try {
+      e.preventDefault();
       const messageTag = document.querySelector('input.form-check-input:checked').id.split('-')[1];
       const messageText = document.getElementById('poster-form').value;
-      const result = await axios({
-        method: 'post',
-        url: `${process.env.REACT_APP_API_URL}add-message/${searchNumber}`,
-        data: {
-          'tag': messageTag,
-          'text': messageText
-        },
-        headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
-      });
-      console.log(result);
-      document.getElementById('poster-button').click();
+      const alertPop = document.getElementById('messageLimit');
+      const response = await postMessage(searchResult.number, messageTag, messageText);
+      if (response.status === 200) {
+        document.getElementById('poster-button').click();
+      } else {
+        alertPop.classList.add('active');
+        setTimeout(()=>alertPop.classList.remove('active'), 2000);
+      }
     } catch(err) {
       handleServiceError(err);
     }
   }
 
-  const handleMessageSubmit = (e) => {
-    e.preventDefault();
-    postMessage();
-  }
 
   return (
     <div className='container py-3 border-bottom'>
       <div className='text-center'>
-        <button type='button' id='poster-button' className='btn btn-success rounded-pill' data-bs-toggle='collapse' data-bs-target='#poster-panel' style={{border: '2px solid rgba(255, 255, 255, 0.8)'}} onClick={handlePosterButton}>Post</button>
+        <button type='button' id='poster-button' className='btn btn-success rounded-pill' data-bs-toggle='collapse' data-bs-target='#poster-panel' style={{border: '2px solid rgba(255, 255, 255, 0.8)'}} onClick={handlePosterButtonClick}>Post</button>
         <span id='poster-title' className='text-light'> your own message</span>
       </div>
       <form className='mx-auto mt-3 px-2' style={{maxWidth: '800px'}} onSubmit={handleMessageSubmit}>

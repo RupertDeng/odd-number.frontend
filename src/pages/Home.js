@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import axios from 'axios';
 import {Jumbo} from '../components/Jumbo';
 import {SearchBox} from '../components/SearchBox';
 import {Info} from '../components/Info';
@@ -10,20 +11,41 @@ import './Home.css'
 export const Home = () => {
 
   const [searchResult, setSearchResult] = useState(undefined);
+  
   const handleServiceError = (err) => {
     console.log(err);
-    const errorPop = document.getElementById('serviceError');
-    errorPop.classList.add('active');
-    setTimeout(()=>errorPop.classList.remove('active'), 2000);
+    const alertPop = document.getElementById('serviceError');
+    alertPop.classList.add('active');
+    setTimeout(()=>alertPop.classList.remove('active'), 2000);
   };
+
+  const queryNumber = (num) => {
+    return axios({
+      method: 'get',
+      url: `${process.env.REACT_APP_API_URL}search/${num}`,
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
+    });
+  };
+
+  const postMessage = (num, messageTag, messageText) => {
+    return axios({
+      method: 'post',
+      url: `${process.env.REACT_APP_API_URL}add-message/${num}`,
+      data: {
+        'tag': messageTag,
+        'text': messageText
+      },
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
+    });
+  }
   
   return (
     <>
       <div id='home'>
         <Jumbo />
-        <SearchBox updateSearchResult={setSearchResult} handleServiceError={handleServiceError}/>
+        <SearchBox queryNumber={queryNumber} setSearchResult={setSearchResult} handleServiceError={handleServiceError}/>
         {searchResult && (<ResultSummary searchResult={searchResult} />)}
-        {searchResult && (<MessagePoster searchNumber={searchResult.number} handleServiceError={handleServiceError} />)}
+        {searchResult && (<MessagePoster searchResult={searchResult} postMessage={postMessage} handleServiceError={handleServiceError} />)}
         <Info />
       </div>
       <Popup popupId='serviceError' popupIcon='bi bi-cone-striped' popupTitle='Service Error' popupMessage='Oops, please try again later.' />    
