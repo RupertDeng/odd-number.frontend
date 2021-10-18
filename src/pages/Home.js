@@ -15,15 +15,15 @@ export const Home = () => {
     const errorPop = document.getElementById('serviceError');
     errorPop.classList.add('active');
     setTimeout(()=>errorPop.classList.remove('active'), 2000);
-  }
+  };
   
   return (
     <>
       <div id='home'>
         <Jumbo />
-        <SearchBox updateSearchResult={setSearchResult} />
-        {searchResult && (<ResultSummary searchResult={searchResult} handleServiceError={handleServiceError} />)}
-        {searchResult && (<MessagePoster searchResult={searchResult} handleServiceError={handleServiceError} />)}
+        <SearchBox updateSearchResult={setSearchResult} handleServiceError={handleServiceError}/>
+        {searchResult && (<ResultSummary searchResult={searchResult} />)}
+        {searchResult && (<MessagePoster searchNumber={searchResult.number} handleServiceError={handleServiceError} />)}
         <Info />
       </div>
       <Popup popupId='serviceError' popupIcon='bi bi-cone-striped' popupTitle='Service Error' popupMessage='Oops, please try again later.' />    

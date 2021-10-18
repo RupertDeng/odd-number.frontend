@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const MessagePoster = ({searchResult, handleServiceError}) => {
+export const MessagePoster = ({searchNumber, handleServiceError}) => {
 
   const clearPoster = () => {
     document.querySelectorAll('input.form-check-input').forEach(e => e.checked = false);
@@ -30,7 +30,7 @@ export const MessagePoster = ({searchResult, handleServiceError}) => {
       const messageText = document.getElementById('poster-form').value;
       const result = await axios({
         method: 'post',
-        url: `${process.env.REACT_APP_API_URL}add-message/${searchResult.number}`,
+        url: `${process.env.REACT_APP_API_URL}add-message/${searchNumber}`,
         data: {
           'tag': messageTag,
           'text': messageText
