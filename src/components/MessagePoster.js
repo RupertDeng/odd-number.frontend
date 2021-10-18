@@ -1,5 +1,6 @@
+import axios from 'axios';
 
-export const MessagePoster = ({searchResult, setSearchResult}) => {
+export const MessagePoster = ({searchResult, handleServiceError}) => {
 
   const clearPoster = () => {
     document.querySelectorAll('input.form-check-input').forEach(e => e.checked = false);
@@ -23,19 +24,44 @@ export const MessagePoster = ({searchResult, setSearchResult}) => {
     }
   }
 
+  const postMessage = async () => {
+    try {
+      const messageTag = document.querySelector('input.form-check-input:checked').id.split('-')[1];
+      const messageText = document.getElementById('poster-form').value;
+      const result = await axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_API_URL}add-message/${searchResult.number}`,
+        data: {
+          'tag': messageTag,
+          'text': messageText
+        },
+        headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
+      });
+      console.log(result);
+      document.getElementById('poster-button').click();
+    } catch(err) {
+      handleServiceError(err);
+    }
+  }
+
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    postMessage();
+  }
+
   return (
     <div className='container py-3 border-bottom'>
       <div className='text-center'>
         <button type='button' id='poster-button' className='btn btn-success rounded-pill' data-bs-toggle='collapse' data-bs-target='#poster-panel' style={{border: '2px solid rgba(255, 255, 255, 0.8)'}} onClick={handlePosterButton}>Post</button>
         <span id='poster-title' className='text-light'> your own message</span>
       </div>
-      <div className='mx-auto mt-3 px-2' style={{maxWidth: '800px'}}>
+      <form className='mx-auto mt-3 px-2' style={{maxWidth: '800px'}} onSubmit={handleMessageSubmit}>
         <div className='row rounded bg-light px-2 px-sm-3 gx-1 align-items-center justify-content-around collapse' id='poster-panel'>
           <div className='col-12 col-md-4 p-2'>
             <label className='py-2 fw-light fs-5'>Select one tag:</label>
-            <div className='ps-2 border bg-white rounded'>
+            <div className='p-2 border bg-white rounded'>
               <div className='form-check'>
-                <input className='form-check-input' type='radio' name='radio-tag' id='tag-scam'></input>
+                <input className='form-check-input' type='radio' name='radio-tag' id='tag-scam' required></input>
                 <label className='form-check-label' htmlFor='tag-scam'>scam/spoofing</label>
               </div>
               <div className='form-check'>
@@ -50,24 +76,21 @@ export const MessagePoster = ({searchResult, setSearchResult}) => {
                 <input className='form-check-input' type='radio' name='radio-tag' id='tag-normal'></input>
                 <label className='form-check-label' htmlFor='tag-normal'>normal business</label>
               </div>
+              <div className='form-check'>
+                <input className='form-check-input' type='radio' name='radio-tag' id='tag-others'></input>
+                <label className='form-check-label' htmlFor='tag-others'>others: please specify</label>
+              </div>
             </div>
           </div>
           <div className='col-12 col-md-7 p-2'>
             <label className='py-2 fw-light fs-5'>Enter your message:</label>
-            <textarea className='form-control' style={{height: '106px'}} id='poster-form' placeholder='Your message will help other people better identify this number.'></textarea>
+            <textarea className='form-control' style={{height: '148px'}} id='poster-form' placeholder='Your message will help other people better identify this number.' required></textarea>
           </div>
-          <div className='col-12 px-4 pt-2 pb-3'>
-            <div className='row align-items-center justify-content-end'>
-              <div className='col-12 col-md-9 text-end d-none'>
-                <span className='fst-italic text-danger'><small>Please select one tag and enter message before submitting. </small></span>
-              </div>
-              <div className='col-12 col-md-2 text-end'>
-                <button className='btn btn-dark'>Submit</button>
-              </div>
-            </div>
+          <div className='col-12 text-end px-4 pt-1 pb-3'>
+            <button type='submit' className='btn btn-dark'>Submit</button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

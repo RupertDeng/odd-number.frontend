@@ -10,14 +10,20 @@ import './Home.css'
 export const Home = () => {
 
   const [searchResult, setSearchResult] = useState(undefined);
+  const handleServiceError = (err) => {
+    console.log(err);
+    const errorPop = document.getElementById('serviceError');
+    errorPop.classList.add('active');
+    setTimeout(()=>errorPop.classList.remove('active'), 2000);
+  }
   
   return (
     <>
       <div id='home'>
         <Jumbo />
         <SearchBox updateSearchResult={setSearchResult} />
-        {searchResult && (<ResultSummary searchResult={searchResult} />)}
-        {searchResult && (<MessagePoster searchResult={searchResult} setSearchResult={setSearchResult} />)}
+        {searchResult && (<ResultSummary searchResult={searchResult} handleServiceError={handleServiceError} />)}
+        {searchResult && (<MessagePoster searchResult={searchResult} handleServiceError={handleServiceError} />)}
         <Info />
       </div>
       <Popup popupId='serviceError' popupIcon='bi bi-cone-striped' popupTitle='Service Error' popupMessage='Oops, please try again later.' />    

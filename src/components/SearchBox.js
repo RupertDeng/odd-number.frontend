@@ -2,7 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import './SearchBox.css';
 
-export const SearchBox = ({updateSearchResult}) => {
+export const SearchBox = ({updateSearchResult, handleServiceError}) => {
 
   // the number searched and validation function to sanitize it
   const [number, setNumber] = useState('');
@@ -40,10 +40,7 @@ export const SearchBox = ({updateSearchResult}) => {
       });
       updateSearchResult(result.data);
     } catch(err) {
-      console.log(err);
-      const errorPop = document.getElementById('serviceError');
-      errorPop.classList.add('active');
-      setTimeout(()=>errorPop.classList.remove('active'), 2000);
+      handleServiceError(err);
     }
   }
   
