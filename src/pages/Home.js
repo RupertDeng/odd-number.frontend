@@ -18,7 +18,7 @@ export const Home = () => {
     const cookieArray = decodeURIComponent(document.cookie).split('; ');
     let value = '';
     cookieArray.forEach(pair => {
-      if (pair.indexOf(cookieKey) === 0) value = pair.substring(cookieKey);
+      if (pair.indexOf(cookieKey) === 0) value = pair.substring(cookieKey.length);
     })
     return value;
   };
@@ -35,7 +35,7 @@ export const Home = () => {
     console.log(err);
     const alertPop = document.getElementById(alertType);
     alertPop.classList.add('active');
-    setTimeout(()=>alertPop.classList.remove('active'), 2000);
+    setTimeout(()=>alertPop.classList.remove('active'), 3000);
   };
 
   // function groups for http requests
@@ -55,7 +55,7 @@ export const Home = () => {
         'tag': messageTag,
         'text': messageText
       },
-      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'visitorId': getCookie('visitorId')},
     });
   }
   
