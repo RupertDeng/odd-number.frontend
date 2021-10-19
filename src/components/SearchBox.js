@@ -1,7 +1,7 @@
 import {useRef} from 'react';
 import './SearchBox.css';
 
-export const SearchBox = ({queryNumber, setSearchResult, handleServiceError}) => {
+export const SearchBox = ({queryNumber, setSearchResult, raiseAlertPop}) => {
 
   const searchBoxRef = useRef();
   
@@ -40,7 +40,7 @@ export const SearchBox = ({queryNumber, setSearchResult, handleServiceError}) =>
         setSearchResult(response.data);
       }
     } catch(err) {
-      handleServiceError(err);
+      raiseAlertPop(err, 'serviceError');
     }
   };
 

@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 
-export const MessagePoster = ({searchResult, setSearchResult, postMessage, handleServiceError}) => {
+export const MessagePoster = ({searchResult, setSearchResult, getCookie, setCookie, postMessage, raiseAlertPop}) => {
 
   // when searched number changes with poster panel open, clear entered info to avoid confusion
   useEffect(()=>clearPoster(), [searchResult.number]);
@@ -40,19 +40,23 @@ export const MessagePoster = ({searchResult, setSearchResult, postMessage, handl
   const handleMessageSubmit = async (e) => {
     try {
       e.preventDefault();
-      const messageTag = document.querySelector('input.form-check-input:checked').id.split('-')[1];
-      const messageText = document.getElementById('poster-form').value;
-      const alertPop = document.getElementById('messageLimit');
-      const response = await postMessage(searchResult.number, messageTag, messageText);
-      if (response.status === 200) {
-        document.getElementById('poster-button').click();
-        updateMessageInState(response.data);
+      if (!navigator.cookieEnabled) {
+        raiseAlertPop('Cookie is disabled', 'cookieDisabled');
       } else {
-        alertPop.classList.add('active');
-        setTimeout(()=>alertPop.classList.remove('active'), 2000);
+        const messageTag = document.querySelector('input.form-check-input:checked').id.split('-')[1];
+        const messageText = document.getElementById('poster-form').value;
+        const response = await postMessage(searchResult.number, messageTag, messageText);
+        if (response.status === 200) {
+          document.getElementById('poster-button').click();
+          const visitorId = getCookie('visitorId');
+          if (!visitorId) setCookie('visitorId', response.data.vID);
+          updateMessageInState(response.data);
+        } else {
+          raiseAlertPop('message limit exceeded', 'messageLimit');
+        }
       }
     } catch(err) {
-      handleServiceError(err);
+      raiseAlertPop(err, 'serviceError');
     }
   }
 
