@@ -101,4 +101,4 @@ export const MessagePoster = ({searchResult, setSearchResult, getCookie, setCook
       </form>
     </div>
   );
-}
+};

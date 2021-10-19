@@ -78,4 +78,4 @@ export const Home = () => {
       <Popup popupId='cookieDisabled' popupIcon='bi bi-palette' popupTitle='Cookie Disabled' popupMessage='Please enable cookie in order to post message.' />        
     </>
   );
-}
+};

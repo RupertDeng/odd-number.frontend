@@ -9,4 +9,4 @@ export const ResultSummary = ({searchResult}) => {
       </div>
     </div>
   );
-}
+};
