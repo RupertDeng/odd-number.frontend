@@ -55,7 +55,7 @@ export const Home = () => {
         'tag': messageTag,
         'text': messageText
       },
-      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'visitorId': getCookie('visitorId')},
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-visitorId': getCookie('visitorId')},
     });
   }
   

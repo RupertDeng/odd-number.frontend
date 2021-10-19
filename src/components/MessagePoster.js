@@ -14,18 +14,15 @@ export const MessagePoster = ({searchResult, setSearchResult, getCookie, setCook
   // handle visual effect when opening and closing poster panel by clicking the post/cancel button
   const handlePosterButtonClick = () => {
     const posterButton = document.getElementById('poster-button');
-    const posterTitle = document.getElementById('poster-title');
     if (posterButton.classList.contains('collapsed')) {
       posterButton.classList.remove('btn-warning');
       posterButton.classList.add('btn-success');
-      posterButton.innerText = 'Post';
-      posterTitle.innerText = ' your own message';
+      posterButton.innerText = 'Post your own message';
       clearPoster();
     } else {
       posterButton.classList.remove('btn-success')
       posterButton.classList.add('btn-warning');
-      posterButton.innerText = 'Cancel';
-      posterTitle.innerText = ' posting message';
+      posterButton.innerText = 'Cancel posting message';
     }
   }
 
@@ -49,7 +46,7 @@ export const MessagePoster = ({searchResult, setSearchResult, getCookie, setCook
         if (response.status === 200) {
           document.getElementById('poster-button').click();
           const visitorId = getCookie('visitorId');
-          if (!visitorId) setCookie('visitorId', response.data.vID);
+          if (!visitorId) setCookie('visitorId', response.headers['x-visitorid']);
           updateMessageInState(response.data);
         } else {
           raiseAlertPop('message limit exceeded', 'messageLimit');
@@ -64,8 +61,7 @@ export const MessagePoster = ({searchResult, setSearchResult, getCookie, setCook
   return (
     <div className='container py-3 border-bottom'>
       <div className='text-center'>
-        <button type='button' id='poster-button' className='btn btn-success rounded-pill' data-bs-toggle='collapse' data-bs-target='#poster-panel' style={{border: '2px solid rgba(255, 255, 255, 0.8)'}} onClick={handlePosterButtonClick}>Post</button>
-        <span id='poster-title' className='text-light'> your own message</span>
+        <button type='button' id='poster-button' className='btn btn-success rounded-pill' data-bs-toggle='collapse' data-bs-target='#poster-panel' style={{border: '2px solid rgba(255, 255, 255, 0.8)'}} onClick={handlePosterButtonClick}>Post your own message</button>
       </div>
       <form className='mx-auto mt-3 px-2' style={{maxWidth: '800px'}} onSubmit={handleMessageSubmit}>
         <div className='row rounded bg-light px-2 px-sm-3 gx-1 align-items-center justify-content-around collapse' id='poster-panel'>
