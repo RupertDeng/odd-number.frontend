@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 
-export const MessagePoster = ({searchResult, postMessage, handleServiceError}) => {
+export const MessagePoster = ({searchResult, setSearchResult, postMessage, handleServiceError}) => {
 
   // when searched number changes with poster panel open, clear entered info to avoid confusion
   useEffect(()=>clearPoster(), [searchResult.number]);
@@ -30,6 +30,13 @@ export const MessagePoster = ({searchResult, postMessage, handleServiceError}) =
   }
 
   // function to handle message submit
+  const updateMessageInState = (msg) => {
+    setSearchResult({
+      ...searchResult,
+      messages: [...searchResult.messages, msg]
+    })
+  };
+
   const handleMessageSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -39,6 +46,7 @@ export const MessagePoster = ({searchResult, postMessage, handleServiceError}) =
       const response = await postMessage(searchResult.number, messageTag, messageText);
       if (response.status === 200) {
         document.getElementById('poster-button').click();
+        updateMessageInState(response.data);
       } else {
         alertPop.classList.add('active');
         setTimeout(()=>alertPop.classList.remove('active'), 2000);

@@ -11,7 +11,9 @@ import './Home.css'
 export const Home = () => {
 
   const [searchResult, setSearchResult] = useState(undefined);
+
   
+  // function groups for http requests
   const handleServiceError = (err) => {
     console.log(err);
     const alertPop = document.getElementById('serviceError');
@@ -39,13 +41,16 @@ export const Home = () => {
     });
   }
   
+
+
+
   return (
     <>
       <div id='home'>
         <Jumbo />
         <SearchBox queryNumber={queryNumber} setSearchResult={setSearchResult} handleServiceError={handleServiceError}/>
         {searchResult && (<ResultSummary searchResult={searchResult} />)}
-        {searchResult && (<MessagePoster searchResult={searchResult} postMessage={postMessage} handleServiceError={handleServiceError} />)}
+        {searchResult && (<MessagePoster searchResult={searchResult} setSearchResult={setSearchResult} postMessage={postMessage} handleServiceError={handleServiceError} />)}
         <Info />
       </div>
       <Popup popupId='serviceError' popupIcon='bi bi-cone-striped' popupTitle='Service Error' popupMessage='Oops, please try again later.' />    
