@@ -1,9 +1,7 @@
-import {useRef} from 'react';
+import React from 'react';
 import './SearchBox.css';
 
-export const SearchBox = ({queryNumber, setSearchResult, raiseAlertPop}) => {
-
-  const searchBoxRef = useRef();
+export const SearchBox = React.memo(({searchedNum, handleSearchInput, queryNumber, handlSearchResult, raiseAlertPop}) => {
   
   // function to handle visual effect after clicking searching button
   const handleSearchClick = () => {
@@ -11,33 +9,19 @@ export const SearchBox = ({queryNumber, setSearchResult, raiseAlertPop}) => {
     document.getElementById('jumbo').classList.add('hide');
     document.getElementById('search-panel').classList.add('narrow-panel');
   };
-
-  // validation function to sanitize search number
-  const validateNumber = (num) => {
-    let filtered = num.replace(/\D/g, '')
-    if (filtered.length > 11 || filtered.length < 10 || (filtered.length === 11 && filtered[0] !== '1')) {
-      return '';
-    } else {
-      if (filtered.length === 11) {
-        filtered = filtered.slice(1);
-      }
-      return `(${filtered.slice(0, 3)})${filtered.slice(3, 6)}-${filtered.slice(6, 10)}`;
-    }
-  };
   
   // function to handle search submit (button click or hit ENTER in text box)
   const handleSearchSubmit = async (e) => {
     try {
       e.preventDefault();
-      const validatedNum = validateNumber(searchBoxRef.current.value);
       const alertPop = document.getElementById('invalidNumber');
-      if (validatedNum === '') {
+      if (searchedNum === '') {
         alertPop.classList.add('active');
-        setSearchResult(undefined);
+        handlSearchResult(undefined);
       } else {
         alertPop.classList.remove('active');
-        const response = await queryNumber(validatedNum);
-        setSearchResult(response.data);
+        const response = await queryNumber(searchedNum);
+        handlSearchResult(response.data);
       }
     } catch(err) {
       raiseAlertPop(err, 'serviceError');
@@ -50,7 +34,7 @@ export const SearchBox = ({queryNumber, setSearchResult, raiseAlertPop}) => {
       <div className='container-fluid'>
         <form className='row justify-content-center align-items-center g-2' onSubmit={handleSearchSubmit}>
           <div className='col-9 col-sm-8'>
-            <input ref={searchBoxRef} type='text' className='form-control fs-4' placeholder='U.S. phone numbers'></input>
+            <input type='text' className='form-control fs-4' placeholder='U.S. phone numbers' onChange={handleSearchInput}></input>
           </div>
           <div className='col-auto'>
             <button type='submit' className='btn btn-primary fs-5 text-white' onClick={handleSearchClick}>
@@ -62,4 +46,4 @@ export const SearchBox = ({queryNumber, setSearchResult, raiseAlertPop}) => {
     </div>
   );
 
-};
+});
