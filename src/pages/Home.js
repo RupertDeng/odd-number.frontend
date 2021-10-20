@@ -1,3 +1,4 @@
+import {useCallback} from 'react';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
 import {Jumbo} from '../components/Jumbo';
@@ -9,8 +10,9 @@ import './Home.css'
 
 export const Home = () => {
 
+  // --------------------------------- Utility function groups ---------------------------------------
   // function to sanitize the input to standard phone number
-  const validateNumber = (num) => {
+  const validateNumber = useCallback((num) => {
     let filtered = num.replace(/\D/g, '');
     if (filtered.length > 11 || filtered.length < 10 || (filtered.length === 11 && filtered[0] !== '1')) {
       return 'invalid';
@@ -20,10 +22,10 @@ export const Home = () => {
       }
       return `(${filtered.slice(0, 3)})${filtered.slice(3, 6)}-${filtered.slice(6, 10)}`;
     }
-  };
+  }, []);
 
-  // functions to deal with cookie
-  const getCookie = (key) => {
+  // function to get browser cookie
+  const getCookie = useCallback((key) => {
     const cookieKey = key + '=';
     const cookieArray = decodeURIComponent(document.cookie).split('; ');
     let value = '';
@@ -31,24 +33,35 @@ export const Home = () => {
       if (pair.indexOf(cookieKey) === 0) value = pair.substring(cookieKey.length);
     })
     return value;
-  };
+  }, []);
 
-  const setCookie = (key, value) => {
+  // function to set browser cookie
+  const setCookie = useCallback((key, value) => {
     let date = new Date();
     date.setTime(date.getTime() + 365 * 24 * 3600 * 1000);
     const expiration = 'expires=' + date.toUTCString();
     document.cookie = `${key}=${value};${expiration};path=/`;
-  };
+  }, []);
+
+
+  // config search visual effect
+  const searchVisualEffect = useCallback(() => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    document.getElementById('jumbo').classList.add('hide');
+    document.getElementById('search-panel').classList.add('narrow-panel');
+  }, []);
   
+
+  // --------------------------------- http request function groups ---------------------------------------
   // function to handle various kinds of errors
-  const raiseAlertPop = (err, alertType) => {
+  const raiseAlertPop = useCallback((err, alertType) => {
     console.log(err);
     const alertPop = document.getElementById(alertType);
     alertPop.classList.add('active');
     setTimeout(()=>alertPop.classList.remove('active'), 3000);
-  };
+  }, []);
 
-  // function groups for http requests
+  // function for Get requests
   const queryNumber = (num) => {
     return axios({
       method: 'get',
@@ -57,6 +70,7 @@ export const Home = () => {
     });
   };
 
+  // function for Post requests
   const postMessage = (num, messageTag, messageText) => {
     return axios({
       method: 'post',
@@ -68,15 +82,16 @@ export const Home = () => {
       headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-visitorId': getCookie('visitorId')},
     });
   };
-  
 
+  
   return (
     <>
       <div id='home'>
         <Jumbo />
         <SearchBox validateNumber={validateNumber}/>
         <Route path='/search/:searchedNum'>
-          <ResultView validateNumber={validateNumber} queryNumber={queryNumber} postMessage={postMessage} raiseAlertPop={raiseAlertPop} getCookie={getCookie} setCookie={setCookie} />
+          <ResultView validateNumber={validateNumber} queryNumber={queryNumber} searchVisualEffect={searchVisualEffect} 
+          postMessage={postMessage} raiseAlertPop={raiseAlertPop} getCookie={getCookie} setCookie={setCookie} />
         </Route>
         <Info />
       </div>

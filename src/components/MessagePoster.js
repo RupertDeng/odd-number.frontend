@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 
-export const MessagePoster = ({searchResult, setSearchResult, getCookie, setCookie, postMessage, raiseAlertPop}) => {
+export const MessagePoster = ({searchResult, handleMessagePost}) => {
 
   // when searched number changes with poster panel open, clear entered info to avoid confusion
   useEffect(()=>clearPoster(), [searchResult.number]);
@@ -26,35 +26,13 @@ export const MessagePoster = ({searchResult, setSearchResult, getCookie, setCook
     }
   }
 
-  // function to handle message submit
-  const updateMessageInState = (msg) => {
-    setSearchResult({
-      ...searchResult,
-      messages: [...searchResult.messages, msg]
-    })
-  };
-
-  const handleMessageSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      if (!navigator.cookieEnabled) {
-        raiseAlertPop('Cookie is disabled', 'cookieDisabled');
-      } else {
-        const messageTag = document.querySelector('input.form-check-input:checked').id.split('-')[1];
-        const messageText = document.getElementById('poster-form').value;
-        const response = await postMessage(searchResult.number, messageTag, messageText);
-        if (response.status === 200) {
-          document.getElementById('poster-button').click();
-          const visitorId = getCookie('visitorId');
-          if (!visitorId) setCookie('visitorId', response.headers['x-visitorid']);
-          updateMessageInState(response.data);
-        } else {
-          raiseAlertPop('message limit exceeded', 'messageLimit');
-        }
-      }
-    } catch(err) {
-      raiseAlertPop(err, 'serviceError');
-    }
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    const afterEffect = () => document.getElementById('poster-button').click();
+    const number = searchResult.number;
+    const messageTag = document.querySelector('input.form-check-input:checked').id.split('-')[1];
+    const messageText = document.getElementById('poster-form').value;
+    handleMessagePost(number, messageTag, messageText, afterEffect);
   }
 
 

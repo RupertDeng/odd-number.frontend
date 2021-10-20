@@ -1,13 +1,18 @@
-import {useState, } from 'react';
-import {Link} from 'react-router-dom';
+import {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import './SearchBox.css';
 
 export const SearchBox = ({validateNumber}) => {
 
   const [searchedNum, setSearchedNum] = useState('invalid');
+  let history = useHistory();
 
   const handleSearchInput = (e) => {
     setSearchedNum(validateNumber(e.target.value));
+  };
+
+  const handleSearchBtnClick = () => {
+    history.push(`/search/${searchedNum}`);
   };
   
 
@@ -20,11 +25,9 @@ export const SearchBox = ({validateNumber}) => {
             <input type='text' className='form-control fs-4' placeholder='U.S. phone numbers' onChange={handleSearchInput}></input>
           </div>
           <div className='col-auto'>
-            <Link to={`/search/${searchedNum}`}>
-              <button type='submit' className='btn btn-primary fs-5 text-white'>
-                <i className='bi bi-search'></i> <span className='d-none d-sm-inline'>Search</span>
-              </button>
-            </Link>
+            <button type='submit' className='btn btn-primary fs-5 text-white' onClick={handleSearchBtnClick}>
+              <i className='bi bi-search'></i> <span className='d-none d-sm-inline'>Search</span>
+            </button>
           </div>
         </form>
       </div>
