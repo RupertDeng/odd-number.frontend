@@ -1,6 +1,7 @@
+import React from 'react';
 import './Jumbo.css';
 
-export const Jumbo = () => {
+export const Jumbo = React.memo(() => {
   return (
     <div className='container py-sm-5 py-4' id='jumbo' style={{backgroundImage: 'url(/images/jumbo-background.png'}}>
       <div className='w-75 mx-auto'>
@@ -10,4 +11,4 @@ export const Jumbo = () => {
       </div>
     </div>
   );
-};
+});

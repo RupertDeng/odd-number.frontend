@@ -1,6 +1,7 @@
+import React from 'react';
 import './Info.css';
 
-export const Info = () => {
+export const Info = React.memo(() => {
   return (
     <div className='container p-5 text-white-50 fs-6'>
       <div className='info-group mx-auto'>
@@ -14,4 +15,4 @@ export const Info = () => {
     </div>
   );
 
-};
+});

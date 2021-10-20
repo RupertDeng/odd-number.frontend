@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import {Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import axios from 'axios';
 import {Jumbo} from '../components/Jumbo';
 import {SearchBox} from '../components/SearchBox';
@@ -83,16 +83,21 @@ export const Home = () => {
     });
   };
 
-  
+
   return (
     <>
       <div id='home'>
         <Jumbo />
         <SearchBox validateNumber={validateNumber}/>
-        <Route path='/search/:searchedNum'>
-          <ResultView validateNumber={validateNumber} queryNumber={queryNumber} searchVisualEffect={searchVisualEffect} 
-          postMessage={postMessage} raiseAlertPop={raiseAlertPop} getCookie={getCookie} setCookie={setCookie} />
-        </Route>
+        <Switch>
+          <Route path='/search/:searchedNum' exact>
+            <ResultView validateNumber={validateNumber} queryNumber={queryNumber} searchVisualEffect={searchVisualEffect} 
+            postMessage={postMessage} raiseAlertPop={raiseAlertPop} getCookie={getCookie} setCookie={setCookie} />
+          </Route>
+          <Route path='*'>
+            <Redirect to='/' />
+          </Route>
+        </Switch>
         <Info />
       </div>
       <Popup popupId='serviceError' popupIcon='bi bi-cone-striped' popupTitle='Service Error' popupMessage='Oops, please try again later.' />    
