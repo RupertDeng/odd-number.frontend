@@ -1,8 +1,8 @@
-import React, {useRef} from 'react';
+import {useRef} from 'react';
 import {useHistory} from 'react-router-dom';
 import './SearchBox.css';
 
-export const SearchBox = React.memo(({validateNumber}) => {
+export const SearchBox = ({validateNumber}) => {
 
   let history = useHistory();
   const searchRef = useRef();
@@ -29,4 +29,4 @@ export const SearchBox = React.memo(({validateNumber}) => {
       </div>
     </div>
   );
-});
+};

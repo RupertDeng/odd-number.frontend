@@ -1,4 +1,3 @@
-import {useCallback} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import axios from 'axios';
 import {Jumbo} from '../components/Jumbo';
@@ -12,7 +11,7 @@ export const Home = () => {
 
   // --------------------------------- Utility function groups ---------------------------------------
   // function to sanitize the input to standard phone number
-  const validateNumber = useCallback((num) => {
+  const validateNumber = (num) => {
     let filtered = num.replace(/\D/g, '');
     if (filtered.length > 11 || filtered.length < 10 || (filtered.length === 11 && filtered[0] !== '1')) {
       return 'invalid';
@@ -22,10 +21,10 @@ export const Home = () => {
       }
       return `(${filtered.slice(0, 3)})${filtered.slice(3, 6)}-${filtered.slice(6, 10)}`;
     }
-  }, []);
+  };
 
   // function to get browser cookie
-  const getCookie = useCallback((key) => {
+  const getCookie = (key) => {
     const cookieKey = key + '=';
     const cookieArray = decodeURIComponent(document.cookie).split('; ');
     let value = '';
@@ -33,33 +32,33 @@ export const Home = () => {
       if (pair.indexOf(cookieKey) === 0) value = pair.substring(cookieKey.length);
     })
     return value;
-  }, []);
+  };
 
   // function to set browser cookie
-  const setCookie = useCallback((key, value) => {
+  const setCookie = (key, value) => {
     let date = new Date();
     date.setTime(date.getTime() + 365 * 24 * 3600 * 1000);
     const expiration = 'expires=' + date.toUTCString();
     document.cookie = `${key}=${value};${expiration};path=/`;
-  }, []);
+  };
 
 
   // config search visual effect
-  const searchVisualEffect = useCallback(() => {
+  const searchVisualEffect = () => {
     window.scrollTo({top: 0, behavior: 'smooth'});
     document.getElementById('jumbo').classList.add('hide');
     document.getElementById('search-panel').classList.add('narrow-panel');
-  }, []);
+  };
   
 
   // --------------------------------- http request function groups ---------------------------------------
   // function to handle various kinds of errors
-  const raiseAlertPop = useCallback((err, alertType) => {
+  const raiseAlertPop = (err, alertType) => {
     console.log(err);
     const alertPop = document.getElementById(alertType);
     alertPop.classList.add('active');
     setTimeout(()=>alertPop.classList.remove('active'), 3000);
-  }, []);
+  };
 
   // function for Get requests
   const queryNumber = (num) => {

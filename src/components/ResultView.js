@@ -43,7 +43,7 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, pos
       ...searchResult,
       messages: searchResult.messages.filter(m => m.time_id !== msgId)
     });
-  }
+  };
 
   const updateVotesIntoState = (msgId, voteType, incre) => {
     setSearchResult({
@@ -58,7 +58,7 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, pos
           return updatedMessage;
         }})
       });
-  }
+  };
 
 
   //------------------------------------- prop functions for child component ------------------------------------
@@ -90,7 +90,7 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, pos
     return (
       <>
         {searchResult && (<ResultSummary searchResult={searchResult} />)}
-        {searchResult && (<MessagePoster searchResult={searchResult} handleMessagePost={handleMessagePost} />)}
+        {searchResult && (<MessagePoster searchedNum={searchResult.number} handleMessagePost={handleMessagePost} />)}
       </>
     );
   }

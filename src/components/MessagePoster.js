@@ -1,9 +1,9 @@
 import {useEffect} from 'react';
 
-export const MessagePoster = ({searchResult, handleMessagePost}) => {
+export const MessagePoster = ({searchedNum, handleMessagePost}) => {
 
   // when searched number changes with poster panel open, clear entered info to avoid confusion
-  useEffect(()=>clearPoster(), [searchResult.number]);
+  useEffect(()=>clearPoster(), [searchedNum]);
 
   // function to clear poster panel inputs
   const clearPoster = () => {
@@ -29,10 +29,9 @@ export const MessagePoster = ({searchResult, handleMessagePost}) => {
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     const afterEffect = () => document.getElementById('poster-button').click();
-    const number = searchResult.number;
     const messageTag = document.querySelector('input.form-check-input:checked').id.split('-')[1];
     const messageText = document.getElementById('poster-form').value;
-    handleMessagePost(number, messageTag, messageText, afterEffect);
+    handleMessagePost(searchedNum, messageTag, messageText, afterEffect);
   }
 
 

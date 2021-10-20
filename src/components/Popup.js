@@ -1,7 +1,6 @@
-import React from 'react';
 import './Popup.css';
 
-export const Popup = React.memo(({popupId, popupIcon, popupTitle, popupMessage}) => {
+export const Popup = ({popupId, popupIcon, popupTitle, popupMessage}) => {
   
   const handlePopupClose = () => {
     document.getElementById(popupId).classList.remove('active');
@@ -22,4 +21,4 @@ export const Popup = React.memo(({popupId, popupIcon, popupTitle, popupMessage})
       </div>
     </div>
   );
-});
+};
