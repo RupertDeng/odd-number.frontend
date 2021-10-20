@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, Redirect} from 'react-router-dom';
 import {ResultSummary} from "./ResultSummary";
 import {MessagePoster} from "./MessagePoster";
 
@@ -32,19 +32,15 @@ export const ResultView = ({validateNumber, queryNumber, postMessage, raiseAlert
   }, [searchedNum, validateNumber, queryNumber, raiseAlertPop]);
 
 
-
-
-
-
-
-  return (
-    <>
-      {searchResult && (<ResultSummary searchResult={searchResult} />)}
-      {searchResult && (<MessagePoster searchResult={searchResult} setSearchResult={setSearchResult} getCookie={getCookie} setCookie={setCookie} postMessage={postMessage} raiseAlertPop={raiseAlertPop} />)}
-    </>
-  );
-
-
-
+  if (searchedNum !== 'invalid' && validateNumber(searchedNum) === 'invalid') {
+    return (<Redirect to='/search/invalid' />);
+  } else {
+    return (
+      <>
+        {searchResult && (<ResultSummary searchResult={searchResult} />)}
+        {searchResult && (<MessagePoster searchResult={searchResult} setSearchResult={setSearchResult} getCookie={getCookie} setCookie={setCookie} postMessage={postMessage} raiseAlertPop={raiseAlertPop} />)}
+      </>
+    );
+  }
 
 };
