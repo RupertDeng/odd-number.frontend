@@ -17,6 +17,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route path='/' exact component={Home} />
+          <Route path='/search' component={Home} />
           <Route path='/terms-of-service' component={Terms} />
           <Route path='/privacy-policy' component={Privacy} />
         </Switch>
