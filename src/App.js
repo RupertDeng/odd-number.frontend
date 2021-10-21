@@ -91,3 +91,23 @@ function App() {
 }
 
 export default App;
+
+
+/*
+
+Component hierarchy:
+<App />: 
+  <Home />: '/' and '/search/:searchedNum'
+    <ResultView /> useEffect to query data based on dependencies of searchedNum and props passed from <Home>
+
+As of react-router-dom 5.3, the two types of Route below have different rendering strategy:
+
+When visiting url: /search/000
+1) <Route path='/search' component={Home} /> or <Route path='/search' render={()=>{(<Home />)}}
+-- Home is re-rendered, and ResultView is also re-rendered, data is re-fetched by useEffect.
+
+2) <Route> <Home /> </Route>
+-- Home is not re-rendered, but ResultView is re-rendered. If searchedNum is not changed, data will not be re-fetched.
+
+
+*/
