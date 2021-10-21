@@ -1,10 +1,16 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { MessageCard } from "./MessageCard";
 
-export const MessageView = ({searchResult, deleteMessageInState, updateVotesIntoState, getCookie}) => {
-  const [currPage, setCurrPage] = useState(1);
+export const MessageView = ({getVidHash, currPage, setCurrPage, searchResult, handleMessageDelete, handleMessageVote}) => {
+ 
   const messageList = searchResult.messages;
+  const [vidHash, setVidHash] = useState(0);
 
+  useEffect(() => {
+    getVidHash().then((hash) => setVidHash(hash));
+  }, [getVidHash]);
+
+  console.log(vidHash);
 
 
   const generateMessageCards = () => {

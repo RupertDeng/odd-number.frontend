@@ -42,6 +42,15 @@ export const Home = () => {
     document.cookie = `${key}=${value};${expiration};path=/`;
   };
 
+  const generateHash = async (original) => {
+    if (!original) {return 0;}
+    const data = new TextEncoder('utf-8').encode(original);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+  };
+
 
   // config search visual effect
   const searchVisualEffect = () => {
@@ -78,9 +87,25 @@ export const Home = () => {
         'tag': messageTag,
         'text': messageText
       },
-      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-visitorId': getCookie('visitorId')},
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-visitorId': getCookie('visitorId')}
     });
   };
+
+  const deleteMessage = (num, msgId) => {
+    return axios({
+      method: 'delete',
+      url: `${process.env.REACT_APP_API_URL}delete-message/${num}/${msgId}`,
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-visitorId': getCookie('visitorId')}
+    });
+  }
+
+  const voteOnMessage = (num, msgId, voteType, incre) => {
+    return axios({
+      method: 'patch',
+      url: `${process.env.REACT_APP_API_URL}vote-message/${num}/${msgId}/${voteType}/${incre > 0 ? 'vote' : 'unvote'}`,
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY}
+    });
+  }
 
 
   return (
@@ -90,8 +115,9 @@ export const Home = () => {
         <SearchBox validateNumber={validateNumber}/>
         <Switch>
           <Route path='/search/:searchedNum' exact>
-            <ResultView validateNumber={validateNumber} queryNumber={queryNumber} searchVisualEffect={searchVisualEffect} 
-            postMessage={postMessage} raiseAlertPop={raiseAlertPop} getCookie={getCookie} setCookie={setCookie} />
+            <ResultView validateNumber={validateNumber} searchVisualEffect={searchVisualEffect} 
+            queryNumber={queryNumber} postMessage={postMessage} deleteMessage={deleteMessage} voteOnMessage={voteOnMessage} 
+            getCookie={getCookie} setCookie={setCookie} generateHash={generateHash} raiseAlertPop={raiseAlertPop}/>
           </Route>
           <Route path='*'>
             <Redirect to='/' />

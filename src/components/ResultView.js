@@ -1,9 +1,10 @@
 import {useState, useEffect} from 'react';
 import {useParams, Redirect} from 'react-router-dom';
-import {ResultSummary} from "./ResultSummary";
-import {MessagePoster} from "./MessagePoster";
+import {ResultSummary} from './ResultSummary';
+import {MessagePoster} from './MessagePoster';
+import {MessageView} from './MessageView';
 
-export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, postMessage, raiseAlertPop, getCookie, setCookie}) => {
+export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, generateHash, postMessage, deleteMessage, voteOnMessage, raiseAlertPop, getCookie, setCookie}) => {
 
   //------------------------------------- useEffect to conduct query based on the url parameter ------------------------------------
   let {searchedNum} = useParams();
@@ -61,7 +62,14 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, pos
   };
 
 
-  //------------------------------------- prop functions for child component ------------------------------------
+
+  //------------------------------------- props for child component ---------------------------------------------
+  // function to get visitorId hash from cookie
+  const getVidHash = async () => {
+    const hash = await generateHash(getCookie('visitorId'));
+    return hash;
+  };
+
   // function to handle submitting message
   const handleMessagePost = async (number, msgTag, msgText, afterEffect) => {
     try {
@@ -82,6 +90,30 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, pos
       raiseAlertPop(err, 'serviceError');
     }
   }
+ 
+  // function to handle delete message
+  const handleMessageDelete = async (number, messageId) => {
+    try {
+      const response = await deleteMessage(number, messageId);
+      if (response.status === 200) deleteMessageInState(messageId);
+    } catch(err) {
+      raiseAlertPop(err, 'serviceError');
+    }
+  };
+
+  // function to handle vote on message
+  const handleMessageVote = async (number, messageId, voteType, incre) => {
+    try {
+      const response = await voteOnMessage(number, messageId, voteType, incre);
+      if (response.status === 200) {
+        updateVotesIntoState(messageId, voteType, incre);
+      } else {
+        raiseAlertPop('vote limit exceeded', 'voteLimit');
+      }
+    } catch(err) {
+      raiseAlertPop(err, 'serviceError');
+    }
+  }
   
 
   if (searchedNum !== 'invalid' && validateNumber(searchedNum) === 'invalid') {
@@ -91,6 +123,7 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, pos
       <>
         {searchResult && (<ResultSummary searchResult={searchResult} />)}
         {searchResult && (<MessagePoster searchedNum={searchResult.number} handleMessagePost={handleMessagePost} />)}
+        {searchResult && searchResult.messages.length !== 0 && (<MessageView getVidHash={getVidHash} searchResult={searchResult} handleMessageDelete={handleMessageDelete} handleMessageVote={handleMessageVote} /> )}
       </>
     );
   }
