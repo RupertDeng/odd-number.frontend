@@ -8,18 +8,78 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 
 function App() {
+  // console.log('app rendered');
 
   smoothscroll.polyfill();
-  
+
+  // function to get browser cookie
+  const getCookie = (key) => {
+    const cookieKey = key + '=';
+    const cookieArray = decodeURIComponent(document.cookie).split('; ');
+    let value = '';
+    cookieArray.forEach(pair => {
+      if (pair.indexOf(cookieKey) === 0) value = pair.substring(cookieKey.length);
+    })
+    return value;
+  };
+
+  // function to set browser cookie
+  const setCookie = (key, value) => {
+    let date = new Date();
+    date.setTime(date.getTime() + 365 * 24 * 3600 * 1000);
+    const expiration = 'expires=' + date.toUTCString();
+    document.cookie = `${key}=${value};${expiration};path=/`;
+  };
+
+  // update visitorId cookie if not exist
+  const updateVid = (newVid) => {
+    const visitorId = getCookie('visitorId');
+    if (!visitorId) {
+      setCookie('visitorId', newVid);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // generate vistorId hash for verifying message owner
+  const getVidHash = async () => {
+    const visitorId = getCookie('visitorId');
+    if (!visitorId) {return 0;}
+    const data = new TextEncoder('utf-8').encode(visitorId);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+  };
+
+  // function to sanitize the input to standard phone number
+  const validateNumber = (num) => {
+    let filtered = num.replace(/\D/g, '');
+    if (filtered.length > 11 || filtered.length < 10 || (filtered.length === 11 && filtered[0] !== '1')) {
+      return 'invalid';
+    } else {
+      if (filtered.length === 11) {
+        filtered = filtered.slice(1);
+      }
+      return `(${filtered.slice(0, 3)})${filtered.slice(3, 6)}-${filtered.slice(6, 10)}`;
+    }
+  };
+
+
   return (
     <>
       <Router>
         <Navbar />
         <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/search' component={Home} />
           <Route path='/terms-of-service' component={Terms} />
           <Route path='/privacy-policy' component={Privacy} />
+          <Route path='/search' render={()=>(
+            <Home getCookie={getCookie} getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} />
+          )} />
+          <Route path='/' exact render={()=>(
+            <Home getCookie={getCookie} getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} />
+          )} />
           <Route path='*'>
             <Redirect to='/' />
           </Route>

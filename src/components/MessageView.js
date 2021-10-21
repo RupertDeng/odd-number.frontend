@@ -1,43 +1,51 @@
 import {useState, useEffect} from 'react';
-import { MessageCard } from "./MessageCard";
+import { MessageCard } from './MessageCard';
 
-export const MessageView = ({getVidHash, currPage, setCurrPage, searchResult, handleMessageDelete, handleMessageVote}) => {
+export const MessageView = ({vidHash, searchResult, handleMessageDelete, handleMessageVote}) => {
+
+  // console.log('messageview rendered');
  
-  const messageList = searchResult.messages;
-  const [vidHash, setVidHash] = useState(0);
-
-  useEffect(() => {
-    getVidHash().then((hash) => setVidHash(hash));
-  }, [getVidHash]);
+  const [currPage, setCurrPage] = useState(1)  // current page state 
+  const msgPerPage = 20;
 
   console.log(vidHash);
 
+  useEffect(() => {
+    setCurrPage(1);
+  }, [searchResult.number, searchResult.searched])
 
-  const generateMessageCards = () => {
+  const generateMessageCards = (pageNum) => {
 
+  }
+
+  const generatePagination = () => {
+    const total = searchResult.messages.length;
+    if (total <= msgPerPage) {
+      return false;
+    } else {
+      const pages = Math.ceil(total / msgPerPage);
+      const pagination = [];
+      for (let i = 1; i <= pages; i++) {
+        pagination.push((<li key={`page-${i}`} className='page-item'><button className='page-link' onClick={()=>setCurrPage(i)}>{i}</button></li>));
+      }
+
+      return (
+        <nav>
+          <ul className='pagination justify-content-center'>
+            <li className='page-item'><button className='page-link' onClick={()=>setCurrPage(Math.max(1, currPage-1))}><i className='bi bi-chevron-left'></i></button></li>
+            {pagination}
+            <li className='page-item'><button className='page-link' onClick={()=>setCurrPage(Math.min(pages, currPage+1))}><i className='bi bi-chevron-right'></i></button></li>
+          </ul>
+        </nav>
+      );
+    }
   }
 
 
 
   return (
     <div className='container'>
-      <nav>
-        <ul className="pagination justify-content-center">
-          <li className="page-item">
-            <a className="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li className="page-item"><a className="page-link" href="#">1</a></li>
-          <li className="page-item"><a className="page-link" href="#">2</a></li>
-          <li className="page-item"><a className="page-link" href="#">3</a></li>
-          <li className="page-item">
-            <a className="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      {generatePagination()}
     </div>
   );
 }; 

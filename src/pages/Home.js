@@ -5,52 +5,9 @@ import {SearchBox} from '../components/SearchBox';
 import {Info} from '../components/Info';
 import {Popup} from '../components/Popup';
 import {ResultView} from '../components/ResultView';
-import './Home.css'
 
-export const Home = () => {
-
-  // --------------------------------- Utility function groups ---------------------------------------
-  // function to sanitize the input to standard phone number
-  const validateNumber = (num) => {
-    let filtered = num.replace(/\D/g, '');
-    if (filtered.length > 11 || filtered.length < 10 || (filtered.length === 11 && filtered[0] !== '1')) {
-      return 'invalid';
-    } else {
-      if (filtered.length === 11) {
-        filtered = filtered.slice(1);
-      }
-      return `(${filtered.slice(0, 3)})${filtered.slice(3, 6)}-${filtered.slice(6, 10)}`;
-    }
-  };
-
-  // function to get browser cookie
-  const getCookie = (key) => {
-    const cookieKey = key + '=';
-    const cookieArray = decodeURIComponent(document.cookie).split('; ');
-    let value = '';
-    cookieArray.forEach(pair => {
-      if (pair.indexOf(cookieKey) === 0) value = pair.substring(cookieKey.length);
-    })
-    return value;
-  };
-
-  // function to set browser cookie
-  const setCookie = (key, value) => {
-    let date = new Date();
-    date.setTime(date.getTime() + 365 * 24 * 3600 * 1000);
-    const expiration = 'expires=' + date.toUTCString();
-    document.cookie = `${key}=${value};${expiration};path=/`;
-  };
-
-  const generateHash = async (original) => {
-    if (!original) {return 0;}
-    const data = new TextEncoder('utf-8').encode(original);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-  };
-
+export const Home = ({getCookie, getVidHash, updateVid, validateNumber}) => {
+  // console.log('home rendered');
 
   // config search visual effect
   const searchVisualEffect = () => {
@@ -58,9 +15,7 @@ export const Home = () => {
     document.getElementById('jumbo').classList.add('hide');
     document.getElementById('search-panel').classList.add('narrow-panel');
   };
-  
 
-  // --------------------------------- http request function groups ---------------------------------------
   // function to handle various kinds of errors
   const raiseAlertPop = (err, alertType) => {
     console.log(err);
@@ -68,7 +23,9 @@ export const Home = () => {
     alertPop.classList.add('active');
     setTimeout(()=>alertPop.classList.remove('active'), 3000);
   };
-
+  
+  
+  // --------------------------------- http request function groups ---------------------------------------
   // function for Get requests
   const queryNumber = (num) => {
     return axios({
@@ -78,7 +35,7 @@ export const Home = () => {
     });
   };
 
-  // function for Post requests
+  // function for Post message requests
   const postMessage = (num, messageTag, messageText) => {
     return axios({
       method: 'post',
@@ -91,6 +48,7 @@ export const Home = () => {
     });
   };
 
+  // function for Delete message requests
   const deleteMessage = (num, msgId) => {
     return axios({
       method: 'delete',
@@ -99,6 +57,7 @@ export const Home = () => {
     });
   }
 
+  // function for vote on message requests
   const voteOnMessage = (num, msgId, voteType, incre) => {
     return axios({
       method: 'patch',
@@ -110,16 +69,15 @@ export const Home = () => {
 
   return (
     <>
-      <div id='home'>
+      <div style={{minHeight: 'calc(100vh - 145px)'}}>
         <Jumbo />
         <SearchBox validateNumber={validateNumber}/>
         <Switch>
           <Route path='/search/:searchedNum' exact>
-            <ResultView validateNumber={validateNumber} searchVisualEffect={searchVisualEffect} 
-            queryNumber={queryNumber} postMessage={postMessage} deleteMessage={deleteMessage} voteOnMessage={voteOnMessage} 
-            getCookie={getCookie} setCookie={setCookie} generateHash={generateHash} raiseAlertPop={raiseAlertPop}/>
+            <ResultView getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} searchVisualEffect={searchVisualEffect} 
+            queryNumber={queryNumber} postMessage={postMessage} deleteMessage={deleteMessage} voteOnMessage={voteOnMessage} raiseAlertPop={raiseAlertPop}/>
           </Route>
-          <Route path='*'>
+          <Route path='/search/*/*'>
             <Redirect to='/' />
           </Route>
         </Switch>

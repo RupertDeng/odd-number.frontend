@@ -4,9 +4,10 @@ import {ResultSummary} from './ResultSummary';
 import {MessagePoster} from './MessagePoster';
 import {MessageView} from './MessageView';
 
-export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, generateHash, postMessage, deleteMessage, voteOnMessage, raiseAlertPop, getCookie, setCookie}) => {
+export const ResultView = ({getVidHash, updateVid, validateNumber, searchVisualEffect, queryNumber, postMessage, deleteMessage, voteOnMessage, raiseAlertPop}) => {
+  // console.log('resultview rendered');
 
-  //------------------------------------- useEffect to conduct query based on the url parameter ------------------------------------
+  //------------------------------------- conduct query to backend. set state every time Home component re-rendered ------------------------------------
   let {searchedNum} = useParams();
   const [searchResult, setSearchResult] = useState(undefined);
 
@@ -30,6 +31,15 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, gen
     };
     fetchSearchResult();
   }, [searchedNum, validateNumber, searchVisualEffect, queryNumber, raiseAlertPop]);
+
+
+//-------------- visitorId hash state, set state everything App component is re-rendered or new cookie created -------------------
+  const [vidHash, setVidHash] = useState(0);
+
+  useEffect(() => {
+    getVidHash().then((hash) => setVidHash(hash));
+  }, [getVidHash])
+
 
 //------------------------------------- utility functions to update searchResult state ------------------------------------
   const updateMessageInState = (msg) => {
@@ -62,14 +72,7 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, gen
   };
 
 
-
   //------------------------------------- props for child component ---------------------------------------------
-  // function to get visitorId hash from cookie
-  const getVidHash = async () => {
-    const hash = await generateHash(getCookie('visitorId'));
-    return hash;
-  };
-
   // function to handle submitting message
   const handleMessagePost = async (number, msgTag, msgText, afterEffect) => {
     try {
@@ -79,8 +82,7 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, gen
         const response = await postMessage(number, msgTag, msgText);
         if (response.status === 200) {
           afterEffect();
-          const visitorId = getCookie('visitorId');
-          if (!visitorId) setCookie('visitorId', response.headers['x-visitorid']);
+          if (updateVid(response.headers['x-visitorid'])) getVidHash().then((hash) => setVidHash(hash));
           updateMessageInState(response.data);
         } else {
           raiseAlertPop('message limit exceeded', 'messageLimit');
@@ -123,7 +125,7 @@ export const ResultView = ({validateNumber, queryNumber, searchVisualEffect, gen
       <>
         {searchResult && (<ResultSummary searchResult={searchResult} />)}
         {searchResult && (<MessagePoster searchedNum={searchResult.number} handleMessagePost={handleMessagePost} />)}
-        {searchResult && searchResult.messages.length !== 0 && (<MessageView getVidHash={getVidHash} searchResult={searchResult} handleMessageDelete={handleMessageDelete} handleMessageVote={handleMessageVote} /> )}
+        {searchResult && searchResult.messages.length !== 0 && (<MessageView vidHash={vidHash} searchResult={searchResult} handleMessageDelete={handleMessageDelete} handleMessageVote={handleMessageVote} /> )}
       </>
     );
   }
