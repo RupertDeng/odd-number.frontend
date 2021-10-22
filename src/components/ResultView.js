@@ -64,7 +64,7 @@ export const ResultView = ({getVidHash, updateVid, validateNumber, searchVisualE
           return m;
         } else {
           let updatedMessage = {...m};
-          if (voteType === 'upvote') {updatedMessage.upvote += incre}
+          if (voteType === 'up') {updatedMessage.upvote += incre}
           else {updatedMessage.downvote += incre}
           return updatedMessage;
         }})

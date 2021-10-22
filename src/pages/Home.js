@@ -44,7 +44,7 @@ export const Home = ({getCookie, getVidHash, updateVid, validateNumber}) => {
         'tag': messageTag,
         'text': messageText
       },
-      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-visitorId': getCookie('visitorId')}
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-Visitorid': getCookie('visitorId')}
     });
   };
 
@@ -53,7 +53,7 @@ export const Home = ({getCookie, getVidHash, updateVid, validateNumber}) => {
     return axios({
       method: 'delete',
       url: `${process.env.REACT_APP_API_URL}delete-message/${num}/${msgId}`,
-      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-visitorId': getCookie('visitorId')}
+      headers: {'X-Api-Key': process.env.REACT_APP_API_KEY, 'X-Visitorid': getCookie('visitorId')}
     });
   }
 
