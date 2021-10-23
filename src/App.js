@@ -72,8 +72,8 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path='/terms-of-service' component={Terms} />
-          <Route path='/privacy-policy' component={Privacy} />
+          <Route path='/terms-of-service'><Terms /></Route>
+          <Route path='/privacy-policy'><Privacy /></Route>
           <Route path='/search' render={()=>(
             <Home getCookie={getCookie} getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} />
           )} />
