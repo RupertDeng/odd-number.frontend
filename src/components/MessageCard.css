@@ -1,0 +1,44 @@
+.btn-vote:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-vote:hover {
+  transform: scale(1.2);
+}
+
+.btn-delete {
+  transition: all 0.3s;
+}
+
+.btn-delete:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-delete:hover {
+  transform: translateX(8px);
+}
+
+.msg-card {
+  transition: all 0.3s;
+  animation: onload 0.4s ease-out;
+}
+
+.msg-card.deleted {
+  transform: translateX(30%) scale(0.6);
+  opacity: 0;
+}
+
+
+@keyframes onload {
+  from {
+    opacity: 0.5;
+    transform: translateY(-30%) scaleY(0.4);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

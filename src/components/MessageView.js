@@ -20,11 +20,11 @@ export const MessageView = ({vidHash, searchResult, handleMessageDelete, handleM
   const generateMessageCards = () => {
     const messageCards = []
     const startMsg = totalMsg - 1 - msgPerPage * (currPage - 1);
-    const endMsg = Math.max(startMsg - 19, 0);
+    const endMsg = Math.max(startMsg - msgPerPage + 1, 0);
     for (let i = startMsg; i >= endMsg; i--) {
       const message = messages[i];
       messageCards.push((
-        <MessageCard key={`msg-${i}`} number={number} vidHash={vidHash} message={message} handleMessageDelete={handleMessageDelete} handleMessageVote={handleMessageVote} />
+        <MessageCard key={`msg-${i}`} cardId={`msg-${i}`} number={number} vidHash={vidHash} message={message} handleMessageDelete={handleMessageDelete} handleMessageVote={handleMessageVote} />
       ))
     }
     return messageCards;
@@ -37,10 +37,10 @@ export const MessageView = ({vidHash, searchResult, handleMessageDelete, handleM
       const pages = Math.ceil(totalMsg / msgPerPage);
       const pagination = [];
       for (let i = 1; i <= pages; i++) {
-        pagination.push((<li key={`page-${i}`} className='page-item'><span className={i === currPage ? 'page-link bg-info text-white' : 'page-link'} onClick={()=>setCurrPage(i)}>{i}</span></li>));
+        pagination.push((<li key={`page-${i}`} className='page-item'><span className={i === currPage ? 'page-link bg-secondary text-white' : 'page-link'} onClick={()=>setCurrPage(i)}>{i}</span></li>));
       }
       return (
-        <nav className='container pt-3'>
+        <nav className='container'>
           <ul className='pagination justify-content-center'>
             <li className='page-item'><span className='page-link' onClick={()=>setCurrPage(Math.max(1, currPage-1))}><i className='bi bi-chevron-left'></i></span></li>
             {pagination}
@@ -55,7 +55,8 @@ export const MessageView = ({vidHash, searchResult, handleMessageDelete, handleM
 
   return (
     <>
-      <div className='container pt-4 pb-2' style={{maxWidth: '900px'}}>
+      {generatePagination()}
+      <div className='container px-2 py-0 mb-3'>
         {generateMessageCards()}
       </div>
       {generatePagination()}

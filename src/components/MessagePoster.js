@@ -36,7 +36,7 @@ export const MessagePoster = ({searchedNum, handleMessagePost}) => {
 
 
   return (
-    <div className='container py-3 border-bottom'>
+    <div className='container py-3 mb-3 border-bottom'>
       <div className='text-center'>
         <button type='button' id='poster-button' className='btn btn-success rounded-pill' data-bs-toggle='collapse' data-bs-target='#poster-panel' style={{border: '2px solid rgba(255, 255, 255, 0.8)'}} onClick={handlePosterButtonClick}>Post your own message</button>
       </div>
