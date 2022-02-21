@@ -15,7 +15,7 @@ function App() {
   smoothscroll.polyfill();
 
   useEffect(()=>{
-    axios({
+    await axios({
       method: 'get',
       url: `${process.env.REACT_APP_API_URL}`,
     });
