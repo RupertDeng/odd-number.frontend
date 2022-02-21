@@ -15,10 +15,17 @@ function App() {
   smoothscroll.polyfill();
 
   useEffect(()=>{
-    await axios({
-      method: 'get',
-      url: `${process.env.REACT_APP_API_URL}`,
-    });
+    const startupCall = async () => {
+      try {
+        await axios({
+          method: 'get',
+          url: `${process.env.REACT_APP_API_URL}`,
+        });
+      } catch(err) {
+        console.log(err)
+      }
+    };
+    startupCall();
   }, [])
 
   // function to get browser cookie
