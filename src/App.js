@@ -5,12 +5,21 @@ import {Privacy} from './pages/Privacy';
 import {Navbar} from './components/Navbar';
 import {Footer} from './components/Footer';
 import smoothscroll from 'smoothscroll-polyfill';
+import axios from 'axios';
+import {useEffect} from 'react';
 
 
 function App() {
   // console.log('app rendered');
-
+  
   smoothscroll.polyfill();
+
+  useEffect(()=>{
+    axios({
+      method: 'get',
+      url: `${process.env.REACT_APP_API_URL}`,
+    });
+  }, [])
 
   // function to get browser cookie
   const getCookie = (key) => {
