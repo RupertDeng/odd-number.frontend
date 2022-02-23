@@ -1,9 +1,12 @@
 import './Popup.css';
 
-export const Popup = ({popupId, popupIcon, popupTitle, popupMessage}) => {
+export const Popup = ({popupId, popupIcon, popupTitle, popupMessage, setCookie}) => {
   
   const handlePopupClose = () => {
     document.getElementById(popupId).classList.remove('active');
+    if (popupId === 'acceptCookie') {
+      setCookie('cookieAccepted', '1');
+    }
   };
 
   return (

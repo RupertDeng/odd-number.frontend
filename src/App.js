@@ -91,10 +91,10 @@ function App() {
           <Route path='/terms-of-service'><Terms /></Route>
           <Route path='/privacy-policy'><Privacy /></Route>
           <Route path='/search' render={()=>(
-            <Home getCookie={getCookie} getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} />
+            <Home getCookie={getCookie} setCookie={setCookie} getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} />
           )} />
           <Route path='/' exact render={()=>(
-            <Home getCookie={getCookie} getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} />
+            <Home getCookie={getCookie} setCookie={setCookie} getVidHash={getVidHash} updateVid={updateVid} validateNumber={validateNumber} />
           )} />
           <Route path='*'>
             <Redirect to='/' />

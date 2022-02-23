@@ -5,9 +5,18 @@ import {SearchBox} from '../components/SearchBox';
 import {Info} from '../components/Info';
 import {Popup} from '../components/Popup';
 import {ResultView} from '../components/ResultView';
+import {useEffect} from 'react';
 
-export const Home = ({getCookie, getVidHash, updateVid, validateNumber}) => {
+export const Home = ({getCookie, setCookie, getVidHash, updateVid, validateNumber}) => {
   // console.log('home rendered');
+
+  useEffect(() => {
+    const cookieState = getCookie('cookieAccepted');
+    if (!cookieState) {
+      document.getElementById('acceptCookie').classList.add('active');
+    }
+  }, [getCookie])
+
 
   // config search visual effect
   const searchVisualEffect = () => {
@@ -83,11 +92,12 @@ export const Home = ({getCookie, getVidHash, updateVid, validateNumber}) => {
         </Switch>
         <Info />
       </div>
-      <Popup popupId='serviceError' popupIcon='bi bi-cone-striped' popupTitle='Service Error' popupMessage='Oops, please try again later.' />    
-      <Popup popupId='invalidNumber' popupIcon='bi bi-emoji-dizzy' popupTitle='Invalid Number' popupMessage='Please enter valid U.S phone number to search.' />
-      <Popup popupId='messageLimit' popupIcon='bi bi-exclamation-triangle' popupTitle='Limit Exceeded' popupMessage='Each IP address can only post 5 messages every 24hrs.' />
-      <Popup popupId='voteLimit' popupIcon='bi bi-exclamation-triangle' popupTitle='Limit Exceeded' popupMessage='Each IP address can only vote 10 times every 24hrs.' />    
-      <Popup popupId='cookieDisabled' popupIcon='bi bi-palette' popupTitle='Cookie Disabled' popupMessage='Please enable cookie in order to post message.' />        
+      <Popup popupId='acceptCookie' popupIcon='bi bi-palette-fill' popupTitle='Have a Cookie ~' popupMessage='This website uses cookie to enhance user experience.' setCookie={setCookie} />
+      <Popup popupId='serviceError' popupIcon='bi bi-cone-striped' popupTitle='Service Error' popupMessage='Oops, please try again later.' setCookie={setCookie} />    
+      <Popup popupId='invalidNumber' popupIcon='bi bi-emoji-dizzy' popupTitle='Invalid Number' popupMessage='Please enter valid U.S phone number to search.' setCookie={setCookie} />
+      <Popup popupId='messageLimit' popupIcon='bi bi-exclamation-triangle' popupTitle='Limit Exceeded' popupMessage='Each IP address can only post 5 messages every 24hrs.' setCookie={setCookie} />
+      <Popup popupId='voteLimit' popupIcon='bi bi-exclamation-triangle' popupTitle='Limit Exceeded' popupMessage='Each IP address can only vote 10 times every 24hrs.' setCookie={setCookie} />    
+      <Popup popupId='cookieDisabled' popupIcon='bi bi-palette' popupTitle='Cookie Disabled' popupMessage='Please enable cookie in order to post message.' setCookie={setCookie} />        
     </>
   );
 };
