@@ -24,7 +24,7 @@ export const MessageView = ({vidHash, searchResult, handleMessageDelete, handleM
     for (let i = startMsg; i >= endMsg; i--) {
       const message = messages[i];
       messageCards.push((
-        <MessageCard key={`msg-${i}`} number={number} vidHash={vidHash} message={message} handleMessageDelete={handleMessageDelete} handleMessageVote={handleMessageVote} />
+        <MessageCard key={message.time_id} number={number} vidHash={vidHash} message={message} handleMessageDelete={handleMessageDelete} handleMessageVote={handleMessageVote} />
       ))
     }
     return messageCards;
