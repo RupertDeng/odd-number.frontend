@@ -1,6 +1,6 @@
 import './MessageCard.css';
 
-export const MessageCard = ({cardId, number, vidHash, message, handleMessageDelete, handleMessageVote}) => {
+export const MessageCard = ({number, vidHash, message, handleMessageDelete, handleMessageVote}) => {
   const {time_id: msgId, pID: posterId, tag: msgTag, text: msgText, upvote, downvote} = message;
 
   let [postDate, postTime] = msgId.split('~');
@@ -35,12 +35,12 @@ export const MessageCard = ({cardId, number, vidHash, message, handleMessageDele
   }
 
   const handleDeleteBtnClick = () => {
-    document.getElementById(cardId).classList.add('deleted');
+    document.getElementById(msgId).classList.add('deleted');
     setTimeout(()=>handleMessageDelete(number, msgId), 400);
   }
 
   return (
-    <div id={cardId} className='msg-card w-100 mx-auto my-2' style={{maxWidth: '900px', padding: '11px', backgroundColor: color, borderRadius: '10px'}}>
+    <div id={msgId} className='msg-card w-100 mx-auto my-2' style={{maxWidth: '900px', padding: '11px', backgroundColor: color, borderRadius: '10px'}}>
       <div className='row mx-auto bg-light rounded px-3 py-1' >
         <div className='col-12 fst-italic p-1 text-center' style={{fontSize: '0.75rem'}}>
           Posted on {postDate} at Eastern Time {postTime}
