@@ -34,7 +34,8 @@ export const MessageCard = ({number, vidHash, message, handleMessageDelete, hand
       color = 'rgba(0,0,0,0.4)';
   }
 
-  const handleDeleteBtnClick = () => {
+  const handleDeleteBtnClick = (e) => {
+    e.preventDefault();
     document.getElementById(msgId).classList.add('deleted');
     setTimeout(()=>handleMessageDelete(number, msgId), 400);
   }
