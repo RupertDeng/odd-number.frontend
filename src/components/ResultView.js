@@ -79,7 +79,7 @@ export const ResultView = ({getVidHash, updateVid, validateNumber, searchVisualE
       if (!navigator.cookieEnabled) {
         raiseAlertPop('Cookie is disabled', 'cookieDisabled');
       } else {
-        const response = await postMessage(number, msgTag, msgText);
+        await postMessage(number, msgTag, msgText);
         afterEffect();
         if (updateVid(response.headers['x-visitorid'])) getVidHash().then((hash) => setVidHash(hash));
         updateMessageInState(response.data);
@@ -106,7 +106,7 @@ export const ResultView = ({getVidHash, updateVid, validateNumber, searchVisualE
   // function to handle vote on message
   const handleMessageVote = async (number, messageId, voteType, incre) => {
     try {
-      const response = await voteOnMessage(number, messageId, voteType, incre);
+      await voteOnMessage(number, messageId, voteType, incre);
       updateVotesIntoState(messageId, voteType, incre);
     } catch(err) {
       if (err.response.status === 429) {
