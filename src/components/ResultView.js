@@ -79,7 +79,7 @@ export const ResultView = ({getVidHash, updateVid, validateNumber, searchVisualE
       if (!navigator.cookieEnabled) {
         raiseAlertPop('Cookie is disabled', 'cookieDisabled');
       } else {
-        await postMessage(number, msgTag, msgText);
+        const response = await postMessage(number, msgTag, msgText);
         afterEffect();
         if (updateVid(response.headers['x-visitorid'])) getVidHash().then((hash) => setVidHash(hash));
         updateMessageInState(response.data);
