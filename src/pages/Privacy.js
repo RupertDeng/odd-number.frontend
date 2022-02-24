@@ -10,7 +10,7 @@ export const Privacy = () => {
         <p><i className='bi bi-layers-fill'></i> &nbsp; User who posted the message is able to delete it from the website, on the same browser used during posting.</p>
         <p><i className='bi bi-layers-fill'></i> &nbsp; User will not be able to delete other user's posted message. This is backed by encrypted cookie authentication.</p>
         <p><i className='bi bi-layers-fill'></i> &nbsp; Brower cookie is used for the sole purpose mentioned above. It will not be used to collect other user information.</p>
-        <p><i className='bi bi-layers-fill'></i> &nbsp; In order to restrict abuse of the message and voting system, visitor's IP is being monitored on the website server during searching/posting/voting actions.</p>
+        <p><i className='bi bi-layers-fill'></i> &nbsp; In order to restrict abuse of the message and voting system, visitor's IP is being monitored on the website server during posting/voting actions.</p>
         <p><i className='bi bi-layers-fill'></i> &nbsp; Beside browser cookie and ip-monitoring, no other data collection is undergoing in any circumstances.</p>
         <p><i className='bi bi-info-circle-fill'></i> &nbsp; If you feel anything that violates your privacy, please leave detailed message under number (000)000-0000, for administrator to address.</p>
       </div>
