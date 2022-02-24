@@ -80,16 +80,16 @@ export const ResultView = ({getVidHash, updateVid, validateNumber, searchVisualE
         raiseAlertPop('Cookie is disabled', 'cookieDisabled');
       } else {
         const response = await postMessage(number, msgTag, msgText);
-        if (response.status === 200) {
-          afterEffect();
-          if (updateVid(response.headers['x-visitorid'])) getVidHash().then((hash) => setVidHash(hash));
-          updateMessageInState(response.data);
-        } else {
-          raiseAlertPop('message limit exceeded', 'messageLimit');
-        }
+        afterEffect();
+        if (updateVid(response.headers['x-visitorid'])) getVidHash().then((hash) => setVidHash(hash));
+        updateMessageInState(response.data);
       }
     } catch(err) {
-      raiseAlertPop(err, 'serviceError');
+      if (err.response.status === 429) {
+        raiseAlertPop('message limit exceeded', 'messageLimit');
+      } else {
+        raiseAlertPop(err, 'serviceError');
+      }
     }
   }
  
@@ -107,13 +107,13 @@ export const ResultView = ({getVidHash, updateVid, validateNumber, searchVisualE
   const handleMessageVote = async (number, messageId, voteType, incre) => {
     try {
       const response = await voteOnMessage(number, messageId, voteType, incre);
-      if (response.status === 200) {
-        updateVotesIntoState(messageId, voteType, incre);
-      } else {
-        raiseAlertPop('vote limit exceeded', 'voteLimit');
-      }
+      updateVotesIntoState(messageId, voteType, incre);
     } catch(err) {
-      raiseAlertPop(err, 'serviceError');
+      if (err.response.status === 429) {
+        raiseAlertPop('vote limite excedded', 'voteLimit');
+      } else {
+        raiseAlertPop(err, 'serviceError');
+      }
     }
   }
   
