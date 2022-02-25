@@ -9,6 +9,7 @@
 <br/>
 
 ## **Implementation details:**
+- Auto-deployed on `netlify` from github repository
 - Re-usable function components by `react.js`
 - Multi-page structure enabled by `react-dom`
 - State management through `react hooks`, useState, useEffect, useRef
