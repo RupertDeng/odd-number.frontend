@@ -15,7 +15,10 @@ export const Terms = () => {
         <p><i className='bi bi-suit-diamond-fill'></i> &nbsp; Due to this platform being completely anonymous, abusing the system is not allowed and will be restricted.</p>
         <p><i className='bi bi-suit-diamond-fill'></i> &nbsp; Messaging and Voting actions are limited under 5 and 10 times, respectively, per ip address, every 24 hours.</p>
         <p><i className='bi bi-info-circle-fill'></i> &nbsp; To report any issue when using the website, please leave detailed message under number (000)000-0000, for administrator to address.</p>
-        </div>
-    </div>
+        <br></br>
+        <br></br>
+        <br></br>
+      </div>
+  </div>
   );
 };

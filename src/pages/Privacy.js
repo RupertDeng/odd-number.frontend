@@ -13,6 +13,9 @@ export const Privacy = () => {
         <p><i className='bi bi-layers-fill'></i> &nbsp; In order to restrict abuse of the message and voting system, visitor's IP is being monitored on the website server during posting/voting actions.</p>
         <p><i className='bi bi-layers-fill'></i> &nbsp; Beside browser cookie and ip-monitoring, no other data collection is undergoing in any circumstances.</p>
         <p><i className='bi bi-info-circle-fill'></i> &nbsp; If you feel anything that violates your privacy, please leave detailed message under number (000)000-0000, for administrator to address.</p>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
     </div>
   );
