@@ -8,7 +8,7 @@
 - User can like or dislike other's message to help highlight useful information.
 <br/>
 
-## **Implementation details:**
+## **Frontend implementation details:**
 - Auto-deployed on `netlify` from github repository
 - Re-usable function components by `react.js`
 - Multi-page structure enabled by `react-dom`
