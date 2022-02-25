@@ -28,5 +28,5 @@
 <br/>
 <br/>
 
-## _For backend implementation, please check the repository: ['Odd Number' Backend](https://github.com/RupertDeng/odd-number.backend)
+## _For backend implementation, please check the repository: ['Odd Number' Backend](https://github.com/RupertDeng/odd-number.backend)_
 
