@@ -11,7 +11,7 @@
 ## **Frontend implementation details:**
 - Auto-deployed on `netlify` from github repository
 - Re-usable function components by `react.js`
-- Multi-page structure enabled by `react-dom`
+- Multi-page structure enabled by `react-router`
 - State management through `react hooks`, useState, useEffect, useRef
 - http request via async/await `axios`
 - css styling with `bootstrap5` and some manual tweaking
